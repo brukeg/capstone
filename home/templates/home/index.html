@@ -1,57 +1,96 @@
 {% extends "home/base.html" %}
 
-{% block content %}
-<form>
-  <label class="sr-only" for="inlineFormInputGroupUsername2">Username</label>
-    <div class="mb-3 input-group">
-      <div class="input-group-append"> <!-- prepend -->
-        <span class="input-group-text">.silamoney.eth</span>
+{% block form %}
+<form class="col form-inputs" id="form-inputs">
+  <div class="check-handle" id="check-handle">
+    <div class="input-group col-md-12">
+      <input type="text" class="form-control" placeholder="User Handle" aria-label="User Handle" aria-describedby="basic-addon2">
+      <div class="input-group-append">
+        <span class="input-group-text" id="basic-addon2">.silamoney.eth</span>
       </div>
-    <input type="text" class="form-control" id="inlineFormInputGroupUsername2" placeholder="User handle">
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputEmail4">Email</label>
-      <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
     </div>
-    <div class="form-group col-md-6">
-      <label for="inputPassword4">Password</label>
-      <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-    </div>
+
+    <button type="submit" class="btn btn-primary">Check Handle</button>
   </div>
-  <div class="form-group">
-    <label for="inputAddress">Address</label>
-    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-  </div>
-  <div class="form-group">
-    <label for="inputAddress2">Address 2</label>
-    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputCity">City</label>
-      <input type="text" class="form-control" id="inputCity">
+
+  <div class="col register" id="register">
+    <div class="name" id="name">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <input type="text" class="form-control" id="first-name" placeholder="First Name">
+        </div>
+
+        <div class="form-group col-md-6">
+          <input type="text" class="form-control" id="last-name" placeholder="Last Name">
+        </div>
+      </div>
     </div>
-    <div class="form-group col-md-4">
-      <label for="inputState">State</label>
-      <select id="inputState" class="form-control">
-        <option selected>Choose...</option>
-        <option>...</option>
-      </select>
+
+    <div class="handle" id="handle">
+      <div class="input-group col-md-12">
+        <input type="text" class="form-control" placeholder="User Handle" aria-label="User Handle" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+          <span class="input-group-text" id="basic-addon2">.silamoney.eth</span>
+        </div>
+      </div>
     </div>
-    <div class="form-group col-md-2">
-      <label for="inputZip">Zip</label>
-      <input type="text" class="form-control" id="inputZip">
+
+    <div class="address" id="address">
+      <div class="form-group col-md-12">
+        <input type="text" class="form-control" id="input-address" placeholder="1234 Main St">
+      </div>
     </div>
+
+    <div class="city-state-zip" id="city-state-zip">
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <input type="text" class="form-control" id="input-city" placeholder="City">
+        </div>
+      </div>
+
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <input type="text" class="form-control" id="input-state" placeholder="State">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <input type="text" class="form-control" id="input-zip" placeholder="Zip Code">
+        </div>
+      </div>
+    </div>
+
+    <div class="ssn-dob" id="ssn-dob">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <input type="text" class="form-control" id="input-ssn" placeholder="SSN">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <input type="text" class="form-control" id="input-dob" placeholder="mm/dd/yyy">
+        </div>
+      </div>
+    </div>
+
+    <div class="email-phone" id="email-phone">
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <input type="email" class="form-control" id="input-email" placeholder="Email">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <input type="text" class="form-control" id="input-phone" placeholder="Phone">
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit Registration</button>
   </div>
-  <div class="form-group">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="gridCheck">
-      <label class="form-check-label" for="gridCheck">
-        Check me out
-      </label>
-    </div>
-  </div>
-  <button type="submit" class="btn btn-primary">Sign in</button>
 </form>
 {% endblock %}

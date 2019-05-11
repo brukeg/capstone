@@ -15,6 +15,11 @@ code {
 }
 
 /* index css */
+#form-inputs {
+    text-align: left;
+    margin: 20px
+}
+
 .App {
   text-align: left;
   margin: 20px;
