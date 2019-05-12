@@ -5,10 +5,11 @@ from home.models import User_entity, Developer
 from silasdk import App
 from silasdk import User as sila_user
 from silasdk import Transaction
+from django.conf import settings
 
 # app_private_key = 'B9*****************D0'
 app_handle = 'brukenodedemo_test.app.silamoney.eth'
-app = App("SANDBOX", app_private_key, app_handle)
+app = App("SANDBOX", settings.APP_PRIVATE_KEY, app_handle)
 
 def index(request):
     app_private_key = '7C857662051B2C2653A317B15DAFD31C84D214BB2C013087B9F64FA885367100'
@@ -33,11 +34,14 @@ def check_handle(request):
 
 def register(request):
     if request.method == 'POST':
-        register_fields = request.POST['register']
-        data = request.json
-        result = sila_user.register(app, data)
-        self.User_entity = register_fields
-        return result
+        register_fields = request.POST.get('register', False)
+        print(register_fields)
+        # data = request.json
+        # result = sila_user.register(app, data)
+        # self.User_entity = register_fields
+        return render(request, 'home/index.html')
+    else:
+        return render(request, 'home/index.html')
 
 
 def request_kyc(request):
