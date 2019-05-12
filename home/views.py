@@ -6,9 +6,8 @@ from silasdk import App
 from silasdk import User as sila_user
 from silasdk import Transaction
 
-
-app_private_key = '7C857662051B2C2653A317B15DAFD31C84D214BB2C013087B9F64FA885367100'
-app_handle = 'brukeco.silamoney.eth'
+# app_private_key = 'B9*****************D0'
+app_handle = 'brukenodedemo_test.app.silamoney.eth'
 app = App("SANDBOX", app_private_key, app_handle)
 
 def index(request):
@@ -22,10 +21,15 @@ def index(request):
 def check_handle(request):
     if request.method == 'POST':
         handle_input = request.POST['handle']
-        data = request.json
-        result = sila_user.checkHandle(app, data)
-        User_entity.user_handle = handle_input
-        return result
+        handle = handle_input + '.silamoney.eth'
+        print(handle)
+        payload = {"user_handle": handle}
+        response = sila_user.checkHandle(app, payload)
+        print(response)
+        context = {'message': response['message']}
+        return render(request, 'home/index.html', context=context)
+    else:
+        return render(request, 'home/index.html')
 
 def register(request):
     if request.method == 'POST':

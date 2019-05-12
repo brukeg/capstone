@@ -1,14 +1,16 @@
 {% extends "home/base.html" %}
 
 {% block form %}
-<form class="col form-inputs" id="form-inputs">
+<form class="col form-inputs" id="form-inputs" action="{% url 'check_handle' %}" method="POST">
+  {% csrf_token %}
   <div class="check-handle" id="check-handle">
     <div class="input-group col-md-12">
-      <input type="text" class="form-control" placeholder="User Handle" aria-label="User Handle" aria-describedby="basic-addon2">
+      <input type="text" class="form-control" name="handle" placeholder="User Handle" aria-label="User Handle" aria-describedby="basic-addon2">
       <div class="input-group-append">
         <span class="input-group-text" id="basic-addon2">.silamoney.eth</span>
       </div>
     </div>
+    <p>Response: {{ message }}</p>
 
     <button type="submit" class="btn btn-primary">Check Handle</button>
   </div>

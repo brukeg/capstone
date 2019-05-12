@@ -119,3 +119,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Includes local settings for private keys:
+locset = os.path.join(os.path.dirname(__file__), 'local_settings.py')
+if os.path.exists(locset):
+    with open(locset) as f:
+        code = compile(f.read(), "local_settings.py", 'exec')
+        exec(code)

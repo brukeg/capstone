@@ -1,3 +1,6 @@
+local_settings.py
+local_settings.py.sample
+
 *.pyc
 *~
 __pycache__
