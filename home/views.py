@@ -34,14 +34,32 @@ def check_handle(request):
 
 def register(request):
     if request.method == 'POST':
-        register_fields = request.POST.get('register', False)
+        register_fields = request.POST.getlist('register')
         print(register_fields)
-        # data = request.json
-        # result = sila_user.register(app, data)
-        # self.User_entity = register_fields
-        return render(request, 'home/index.html')
+        country = "US"
+        handle = register_fields[2] + '.silamoney.eth'
+        print(country, handle)
+        payload = {
+            "country": country,
+            "user_handle": handle,
+            "first_name": register_fields[0],
+            "last_name": register_fields[1],
+            "entity_name": 'Last Family Trust',
+            "identity_value": register_fields[7],
+            "phone": '1234567890',
+            "street_address_1": register_fields[3],
+            "city": register_fields[4],
+            "state": register_fields[5],
+            "postal_code": register_fields[6],
+            "crypto_address": '0x7324F22D94e4F41d51903660fc5CbC60C31D4657',
+            "birthdate": register_fields[8]
+            }
+        response = sila_user.register(app, payload)
+        print(response)
+        context = {'message': response['message']}
+        return render(request, 'home/index.html', context=context)
     else:
-        return render(request, 'home/index.html')
+        return render(request, 'home/index.html', context=context)
 
 
 def request_kyc(request):
