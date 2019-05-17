@@ -105,7 +105,10 @@
        <label for="exampleForm.ControlSelect1" class="form-label">Select User</label>
        <button class="btn btn-sm text-danger float-right">Reset App</button>
         <select id="exampleForm.ControlSelect1" class="form-control">
-         <option>Select a user ...</option><option value="batman.test">batman.test.silamoney.eth (bat man)</option>
+          <option>Select a user ...</option>
+            {% for user in users %}
+              <option value="users">{{ user }}</option>
+            {% endfor %}
         </select>
      </div>
 
