@@ -1,96 +1,145 @@
 {% extends "home/base.html" %}
 
 {% block form %}
-<form class="col form-inputs" id="check-handle-inputs" action="{% url 'check_handle' %}" method="POST">
-  {% csrf_token %}
-  <div class="check-handle" id="check-handle">
-    <div class="input-group col-md-12">
-      <input type="text" class="form-control" name="handle" placeholder="User Handle" aria-label="User Handle" aria-describedby="basic-addon2">
-      <div class="input-group-append">
-        <span class="input-group-text" id="basic-addon2">.silamoney.eth</span>
-      </div>
-    </div>
-    <p>Response: {{ message }}</p>
-
-    <button type="submit" class="btn btn-primary">Check Handle</button>
-  </div>
-</form>
-
-<form class="col form-inputs" id="register-inputs" action="{% url 'register' %}" method="POST">
-  {% csrf_token %}
-  <div class="col register" id="register">
-    <div class="name" id="name">
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <input type="text" class="form-control" id="first-name" name="register" placeholder="First Name">
-        </div>
-
-        <div class="form-group col-md-6">
-          <input type="text" class="form-control" id="last-name" name="register" placeholder="Last Name">
-        </div>
-      </div>
-    </div>
-
-    <div class="handle" id="handle">
-      <div class="form-row">
+<div class="app">
+  <div class="left">
+    <form class="col form-inputs" id="check-handle-inputs" action="{% url 'check_handle' %}" method="POST">
+      {% csrf_token %}
+      <div class="check-handle" id="check-handle">
         <div class="input-group col-md-12">
-          <input type="text" class="form-control" name="register" placeholder="User Handle" aria-label="User Handle" aria-describedby="basic-addon2">
-          <div class="input-group-append">
-            <span class="input-group-text" id="basic-addon2">.silamoney.eth</span>
+          <div class="mb-3 input-group">
+            <input type="text" class="form-control" name="handle" placeholder="User Handle" aria-label="User Handle" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2">.silamoney.eth</span>
+            </div>
           </div>
+            <button type="submit" class="btn btn-block btn-primary">Check Handle</button>
         </div>
       </div>
-    </div>
+    </form>
+    <hr class="line1"> {# whyyy #}
 
-    <div class="address" id="address">
-      <div class="form-row">
-        <div class="form-group col-md-12">
-          <input type="text" class="form-control" id="input-address" name="register" placeholder="1234 Main St">
-        </div>
-      </div>
-    </div>
-
-    <div class="city-state-zip" id="city-state-zip">
-        <div class="form-row">
-          <div class="form-group col-md-4">
-            <input type="text" class="form-control" id="input-city" name="register" placeholder="City">
-          </div>
-
-          <div class="form-group col-md-4">
-            <input type="text" class="form-control" id="input-state" name="register" placeholder="State">
-          </div>
-
-          <div class="form-group col-md-4">
-            <input type="text" class="form-control" id="input-zip" name="register" placeholder="Zip Code">
+    <form class="col form-inputs" id="register-inputs" action="{% url 'register' %}" method="POST">
+      {% csrf_token %}
+      <div class="col register" id="register">
+        <div class="name" id="name">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <input type="text" class="form-control" id="first-name" name="register" placeholder="First Name">
+            </div>
+            <div class="form-group col-md-6">
+              <input type="text" class="form-control" id="last-name" name="register" placeholder="Last Name">
+            </div>
           </div>
         </div>
-    </div>
 
-    <div class="ssn-dob" id="ssn-dob">
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <input type="text" class="form-control" id="input-ssn" name="register" placeholder="SSN">
+        <div class="handle" id="handle">
+          <div class="form-row">
+            <div class="input-group col-md-12">
+              <div class="mb-3 input-group">
+              <input type="text" class="form-control" name="register" placeholder="User Handle" aria-label="User Handle" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2">.silamoney.eth</span>
+              </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="form-group col-md-6">
-          <input type="text" class="form-control" id="input-dob" name="register" placeholder="yyyy/mm/dd">
+        <div class="address" id="address">
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <input type="text" class="form-control" id="input-address" name="register" placeholder="1234 Main St">
+            </div>
+          </div>
         </div>
+
+        <div class="city-state-zip" id="city-state-zip">
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <input type="text" class="form-control" id="input-city" name="register" placeholder="City">
+              </div>
+
+              <div class="form-group col-md-4">
+                <input type="text" class="form-control" id="input-state" name="register" placeholder="State">
+              </div>
+
+              <div class="form-group col-md-4">
+                <input type="text" class="form-control" id="input-zip" name="register" placeholder="Zip Code">
+              </div>
+            </div>
+        </div>
+
+        <div class="ssn-dob" id="ssn-dob">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <input type="text" class="form-control" id="input-ssn" name="register" placeholder="SSN">
+            </div>
+
+            <div class="form-group col-md-6">
+              <input type="text" class="form-control" id="input-dob" name="register" placeholder="yyyy-mm-dd">
+            </div>
+          </div>
+
+        <div class="email-phone" id="email-phone">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <input type="email" class="form-control" id="input-email" name="register" placeholder="Email">
+            </div>
+
+            <div class="form-group col-md-6">
+              <input type="text" class="form-control" id="input-phone" name="register" placeholder="Phone">
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-block btn-primary">Register</button>
       </div>
-
-    <div class="email-phone" id="email-phone">
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <input type="email" class="form-control" id="input-email" name="register" placeholder="Email">
-        </div>
-
-        <div class="form-group col-md-6">
-          <input type="text" class="form-control" id="input-phone" name="register" placeholder="Phone">
-        </div>
-      </div>
+    </form>
     </div>
-
-    <button type="submit" class="btn btn-primary">Submit Registration</button>
   </div>
-    <p>Response: {{ message }}</p>
-</form>
+
+
+   <div class="meta-data">
+     <div class="form-group">
+       <label for="exampleForm.ControlSelect1" class="form-label">Select User</label>
+       <button class="btn btn-sm text-danger float-right">Reset App</button>
+        <select id="exampleForm.ControlSelect1" class="form-control">
+         <option>Select a user ...</option><option value="batman.test">batman.test.silamoney.eth (bat man)</option>
+        </select>
+     </div>
+
+     <div class="addresses">
+       {% if etheraddress %}
+         <address>
+           <strong>{{ handle }}</strong>  {# just the first part of handle #}
+           <br>
+           <p>{{ street }}</p>
+           <p>{{ city }} {{ state }} {{ zip }}</p>
+           <br>
+           <br>
+           <p>{{ etheraddress }}</p>
+           <p class="text-muted"> Private key has been set locally</p>
+        </address>
+       {% endif %}
+     </div>
+
+     <strong>KYC Status:</strong>
+{#       <span class="kyc" action="{% url 'register' %}" method="POST"> #}
+       <span class="kyc">
+
+         <form action="{% url 'request_kyc' %}" class="request" method="POST">
+           {% csrf_token %}
+           <button type="submit" class="btn btn-sm btn-secondary float-right" name="request-kyc">Request KYC</button>
+         </form>
+         <form action="{% url 'request_kyc' %}"  class="check" method="POST">
+           {% csrf_token %}
+           <button type="submit" class="btn btn-sm btn-secondary float-right" name="check-kyc">Check KYC Status</button>
+         </form>
+       </span>
+       <hr class="line1">
+       <h2>Response:</h2>
+       <p class="message">{{ message }}</p>
+   </div>
+</div>
 {% endblock %}
