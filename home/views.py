@@ -19,8 +19,9 @@ def index(request):
     app_handle = 'brukeco.silamoney.eth'
     silaApp = App("SANDBOX", app_private_key, app_handle)
     # return HttpResponse(silaApp.app_handle)
-    return render(request, 'home/index.html')
-
+    user_obj = User_entity.objects.all()
+    context = {'users': user_obj}
+    return render(request, 'home/index.html', context=context)
 
 def check_handle(request):
     if request.method == 'POST':
@@ -95,19 +96,20 @@ def request_kyc(request):
         request_kyc_payload = {"user_handle": user_obj.user_handle}
         response = sila_user.requestKyc(app, request_kyc_payload, user_obj.private_key)
         print(response)
-        return render(request, 'home/index.html')
+        context = {'message': response}
+        return render(request, 'home/index.html', context=context)
     else:
         return render(request, 'home/index.html')
 
 
 def check_kyc(request):
     if request.method == 'POST':
-        check = request.POST['check-kyc']
-        print(check_kyc)
-        check_kyc_payload = {"user_handle": User_entity.user_handle}
-        response = sila_user.checkKyc(app, check_kyc_payload, User_entity.private_key)
+        user_obj = User_entity.objects.latest('created_date')
+        check_kyc_payload = {"user_handle": user_obj.user_handle}
+        response = sila_user.checkKyc(app, check_kyc_payload, user_obj.private_key)
         print(response)
-        return render(request, 'home/index.html')
+        context = {'message': response}
+        return render(request, 'home/index.html', context=context)
     else:
         return render(request, 'home/index.html')
 
