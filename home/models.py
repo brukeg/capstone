@@ -11,7 +11,7 @@ class User_entity(models.Model):
     state = models.CharField(max_length=2)                              # required: the users state
     postal_code = models.CharField(max_length=10)                       # required: USPS zip code for the end users
     identity_value = models.CharField(max_length=9)                     # required: users social security number
-    birthdate = models.DateField()                                      # required: users date of birth
+    birthdate = models.DateField(blank=True, null=True)                   # required: users date of birth YYYY-mm-dd
     email = models.EmailField(max_length=100)                           # required: email address
     phone = models.CharField(max_length=10)                             # required: users US phone number
     crypto_address = models.CharField(max_length=42)                    # required: users ethereum address
@@ -22,6 +22,14 @@ class User_entity(models.Model):
     def __str__(self):
         """String for representing the Model object."""
         return self.user_handle
+
+class PlaidLinkAccount(models.Model):
+    user_handle = models.CharField(max_length=30)
+    account_number = models.CharField(max_length=30)
+    routing_number = models.CharField(max_length=9)
+    access_token = models.CharField(max_length=100)
+    item_id = models.CharField(max_length=100)
+
 
 class Developer(models.Model):
     dev_handle = models.CharField(max_length=256)
