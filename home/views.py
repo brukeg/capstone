@@ -15,10 +15,6 @@ app_handle = 'brukenodedemo_test.app.silamoney.eth'
 app = App("SANDBOX", settings.APP_PRIVATE_KEY, app_handle)
 
 def index(request):
-    app_private_key = '7C857662051B2C2653A317B15DAFD31C84D214BB2C013087B9F64FA885367100'
-    app_handle = 'brukeco.silamoney.eth'
-    silaApp = App("SANDBOX", app_private_key, app_handle)
-    # return HttpResponse(silaApp.app_handle)
     user_obj = User_entity.objects.all()
     context = {'users': user_obj}
     return render(request, 'home/index.html', context=context)
@@ -73,6 +69,7 @@ def register(request):
             private_key=wallet['eth_private_key'],
             email=register_fields[9],
             )
+        print(user.birthdate)
         user.save()
         context = {
             'reference': response['reference'],
@@ -115,7 +112,18 @@ def check_kyc(request):
 
 
 def link_account(request):
-    pass
+    if request.method == 'POST':
+        user_obj = User_entity.objects.latest('created_date')
+        link_account_payload = {
+            "public_token": "public-development-0dc5f214-56a2-4b69-8968-f27202477d3f",
+            "user_handle": user_obj.user_handle
+            }
+        response = sila_user.linkAccount(app, link_account_payload, user_obj.private_key)
+        print(response)
+        context = {'message': response}
+        return render(request, 'home/index.html', context=context)
+    else:
+        return render(request, 'home/index.html')
 
 
 def get_accounts(request):
