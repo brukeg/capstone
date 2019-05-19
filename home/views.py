@@ -2,6 +2,7 @@
 from django.shortcuts import render
 from django.conf import settings
 from .models import User_entity
+import json
 # from django.http import HttpResponse
 # from home.models import User_entity, Developer
 from silasdk import App
@@ -9,15 +10,16 @@ from silasdk import User as sila_user
 from silasdk import EthWallet
 from silasdk import Transaction
 
-
 # app_private_key = 'B9*****************D0'
 app_handle = 'brukenodedemo_test.app.silamoney.eth'
 app = App("SANDBOX", settings.APP_PRIVATE_KEY, app_handle)
+
 
 def index(request):
     user_obj = User_entity.objects.all()
     context = {'users': user_obj}
     return render(request, 'home/index.html', context=context)
+
 
 def check_handle(request):
     if request.method == 'POST':
@@ -29,6 +31,7 @@ def check_handle(request):
         return render(request, 'home/index.html', context=context)
     else:
         return render(request, 'home/index.html')
+
 
 def register(request):
     if request.method == 'POST':
@@ -49,7 +52,7 @@ def register(request):
             "postal_code": register_fields[6],
             "crypto_address": wallet['eth_address'],
             "birthdate": register_fields[8],
-            }
+        }
         response = sila_user.register(app, payload)
 
         user = User_entity(
@@ -68,8 +71,7 @@ def register(request):
             birthdate=register_fields[8],
             private_key=wallet['eth_private_key'],
             email=register_fields[9],
-            )
-        print(user.birthdate)
+        )
         user.save()
         context = {
             'reference': response['reference'],
@@ -81,7 +83,7 @@ def register(request):
             'zip': payload['postal_code'],
             'etheraddress': payload['crypto_address'],
             'handle': payload['user_handle'],
-            }
+        }
         return render(request, 'home/index.html', context=context)
     else:
         return render(request, 'home/index.html')
@@ -111,19 +113,28 @@ def check_kyc(request):
         return render(request, 'home/index.html')
 
 
+# def link_account(request):
+#     if request.method == 'POST':
+#         user_obj = User_entity.objects.latest('created_date')
+#         link_account_payload = {
+#             "public_token": "public-development-0dc5f214-56a2-4b69-8968-f27202477d3f",
+#             "user_handle": user_obj.user_handle
+#             }
+#         response = sila_user.linkAccount(app, link_account_payload, user_obj.private_key)
+#         print(response)
+#         context = {'message': response}
+#         return render(request, 'home/index.html', context=context)
+#     else:
+#         return render(request, 'home/index.html')
+
 def link_account(request):
     if request.method == 'POST':
-        user_obj = User_entity.objects.latest('created_date')
-        link_account_payload = {
-            "public_token": "public-development-0dc5f214-56a2-4b69-8968-f27202477d3f",
-            "user_handle": user_obj.user_handle
-            }
-        response = sila_user.linkAccount(app, link_account_payload, user_obj.private_key)
+        data = request.data
+        data1 = json.loads(data)
+        response = json.dumps(sila_user.linkAccount(app, data1, data1["private_key"]))
         print(response)
         context = {'message': response}
         return render(request, 'home/index.html', context=context)
-    else:
-        return render(request, 'home/index.html')
 
 
 def get_accounts(request):
@@ -144,4 +155,3 @@ def redeem_sila(request):
 
 def get_transactions(request):
     pass
-

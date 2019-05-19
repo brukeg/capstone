@@ -1,63 +1,65 @@
 {% extends "home/base.html" %}
 
 {% block form %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
-<script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
-<div class="app">
-  <div class="left">
-    <form class="col form-inputs" id="check-handle-inputs" action="{% url 'check_handle' %}" method="POST">
-      {% csrf_token %}
-      <div class="check-handle" id="check-handle">
-        <div class="input-group col-md-12">
-          <div class="mb-3 input-group">
-            <input type="text" class="form-control" name="handle" placeholder="User Handle" aria-label="User Handle" aria-describedby="basic-addon2">
-            <div class="input-group-append">
-              <span class="input-group-text" id="basic-addon2">.silamoney.eth</span>
-            </div>
-          </div>
-            <button type="submit" class="btn btn-block btn-primary">Check Handle</button>
-        </div>
-          <hr class="left" id="line1"> {# whyyyyy #}
-      </div>
-    </form>
-
-
-    <form class="col form-inputs" id="register-inputs" action="{% url 'register' %}" method="POST">
-      {% csrf_token %}
-      <div class="col register" id="register">
-        <div class="name" id="name">
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <input type="text" class="form-control" id="first-name" name="register" placeholder="First Name">
-            </div>
-            <div class="form-group col-md-6">
-              <input type="text" class="form-control" id="last-name" name="register" placeholder="Last Name">
-            </div>
-          </div>
-        </div>
-
-        <div class="handle" id="handle">
-          <div class="form-row">
-            <div class="input-group col-md-12">
-              <div class="mb-3 input-group">
-              <input type="text" class="form-control" name="register" placeholder="User Handle" aria-label="User Handle" aria-describedby="basic-addon2">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+  <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+  <div class="app">
+    <div class="left">
+      <form class="col form-inputs" id="check-handle-inputs" action="{% url 'check_handle' %}" method="POST">
+        {% csrf_token %}
+        <div class="check-handle" id="check-handle">
+          <div class="input-group col-md-12">
+            <div class="mb-3 input-group">
+              <input type="text" class="form-control" name="handle" placeholder="User Handle" aria-label="User Handle"
+                     aria-describedby="basic-addon2">
               <div class="input-group-append">
                 <span class="input-group-text" id="basic-addon2">.silamoney.eth</span>
               </div>
+            </div>
+            <button type="submit" class="btn btn-block btn-primary">Check Handle</button>
+          </div>
+          <hr class="left" id="line1"> {# whyyyyy #}
+        </div>
+      </form>
+
+
+      <form class="col form-inputs" id="register-inputs" action="{% url 'register' %}" method="POST">
+        {% csrf_token %}
+        <div class="col register" id="register">
+          <div class="name" id="name">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="first-name" name="register" placeholder="First Name">
+              </div>
+              <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="last-name" name="register" placeholder="Last Name">
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="address" id="address">
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <input type="text" class="form-control" id="input-address" name="register" placeholder="1234 Main St">
+          <div class="handle" id="handle">
+            <div class="form-row">
+              <div class="input-group col-md-12">
+                <div class="mb-3 input-group">
+                  <input type="text" class="form-control" name="register" placeholder="User Handle"
+                         aria-label="User Handle" aria-describedby="basic-addon2">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">.silamoney.eth</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="city-state-zip" id="city-state-zip">
+          <div class="address" id="address">
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <input type="text" class="form-control" id="input-address" name="register" placeholder="1234 Main St">
+              </div>
+            </div>
+          </div>
+
+          <div class="city-state-zip" id="city-state-zip">
             <div class="form-row">
               <div class="form-group col-md-4">
                 <input type="text" class="form-control" id="input-city" name="register" placeholder="City">
@@ -71,158 +73,158 @@
                 <input type="text" class="form-control" id="input-zip" name="register" placeholder="Zip Code">
               </div>
             </div>
-        </div>
-
-        <div class="ssn-dob" id="ssn-dob">
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <input type="text" class="form-control" id="input-ssn" name="register" placeholder="SSN">
-            </div>
-
-            <div class="form-group col-md-6">
-              <input type="text" class="form-control" id="input-dob" name="register" placeholder="yyyy-mm-dd">
-            </div>
           </div>
 
-        <div class="email-phone" id="email-phone">
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <input type="email" class="form-control" id="input-email" name="register" placeholder="Email">
+          <div class="ssn-dob" id="ssn-dob">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="input-ssn" name="register" placeholder="SSN">
+              </div>
+
+              <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="input-dob" name="register" placeholder="yyyy-mm-dd">
+              </div>
             </div>
 
-            <div class="form-group col-md-6">
-              <input type="text" class="form-control" id="input-phone" name="register" placeholder="Phone">
+            <div class="email-phone" id="email-phone">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <input type="email" class="form-control" id="input-email" name="register" placeholder="Email">
+                </div>
+
+                <div class="form-group col-md-6">
+                  <input type="text" class="form-control" id="input-phone" name="register" placeholder="Phone">
+                </div>
+              </div>
             </div>
+
+            <button type="submit" class="btn btn-block btn-primary">Register</button>
           </div>
-        </div>
-
-        <button type="submit" class="btn btn-block btn-primary">Register</button>
-      </div>
-      <hr class="left" id="line1">
-      <form action="{% url 'link_account' %}"  class="link-account" method="POST">
-        {% csrf_token %}
-{#        <button type="submit" class="btn btn-block btn-primary" name="link-account">Link Account</button>#}
-        <p><a href="#" id="link-account" class="btn btn-primary">Link Account</a></p>
+          <hr class="left" id="line1">
+          {#      <form action="{% url 'link_account' %}"  class="link-account" method="POST">#}
+          {#        {% csrf_token %}#}
+          {#        <button type="submit" class="btn btn-block btn-primary" name="link-account">Link Account</button>#}
+          <p><a href="#" id="link-account" class="btn btn-primary">Link Account</a></p>
       </form>
-    </form>
+      </form>
     </div>
   </div>
 
-   <div class="meta-data">
-     <div class="form-group">
-       <label for="exampleForm.ControlSelect1" class="form-label">Select User</label>
-       <button class="btn btn-sm text-danger float-right">Reset App</button>
-        <select id="exampleForm.ControlSelect1" class="form-control">
-          <option>Select a user ...</option>
-            {% for user in users %}
-              <option value="users">{{ user }}</option>
-            {% endfor %}
-        </select>
-     </div>
+  <div class="meta-data">
+    <div class="form-group">
+      <label for="exampleForm.ControlSelect1" class="form-label">Select User</label>
+      <button class="btn btn-sm text-danger float-right">Reset App</button>
+      <select id="exampleForm.ControlSelect1" class="form-control">
+        <option>Select a user ...</option>
+        {% for user in users %}
+          <option value="users">{{ user }}</option>
+        {% endfor %}
+      </select>
+    </div>
 
-     <div class="addresses">
-       {% if etheraddress %}
-         <address>
-           <strong>{{ handle }}</strong>  {# just the first part of handle #}
-           <br>
-           <p>{{ street }}</p>
-           <p>{{ city }} {{ state }} {{ zip }}</p>
-           <br>
-           <br>
-           <p>{{ etheraddress }}</p>
-           <p class="text-muted"> Private key has been set locally</p>
+    <div class="addresses">
+      {% if etheraddress %}
+        <address>
+          <strong>{{ handle }}</strong> {# just the first part of handle #}
+          <br>
+          <p>{{ street }}</p>
+          <p>{{ city }} {{ state }} {{ zip }}</p>
+          <br>
+          <br>
+          <p>{{ etheraddress }}</p>
+          <p class="text-muted"> Private key has been set locally</p>
         </address>
-       {% endif %}
-     </div>
+      {% endif %}
+    </div>
 
-     <strong>KYC Status:</strong>
-       <span class="kyc">
+    <strong>KYC Status:</strong>
+    <span class="kyc">
          <form action="{% url 'request_kyc' %}" class="request" method="POST">
            {% csrf_token %}
            <button type="submit" class="btn btn-sm btn-secondary float-right" name="request-kyc">Request KYC</button>
          </form>
-         <form action="{% url 'request_kyc' %}"  class="check" method="POST">
+         <form action="{% url 'request_kyc' %}" class="check" method="POST">
            {% csrf_token %}
            <button type="submit" class="btn btn-sm btn-secondary float-right" name="check-kyc">Check KYC Status</button>
          </form>
        </span>
-       <hr id="line1">
-       <h2>Response:</h2>
-       <p class="message">{{ message }}</p>
-   </div>
-</div>
+    <hr id="line1">
+    <h2>Response:</h2>
+    <p class="message">{{ message }}</p>
+  </div>
+  </div>
 
   <script>
-      $(document).ready(function(){
-        console.log('page is loaded ...');
-        var handler = Plaid.create({
-        clientName: 'Plaid Quickstart',
-        env: 'sandbox',
-        key: 'fa9dd19eb40982275785b09760ab79',
-        product: ['auth'],
-        // Optional – use webhooks to get transaction and error updates
-        webhook: 'https://requestb.in',
-        onLoad: function() {
-        // Optional, called when Link loads
-        },
-        onSuccess: function(public_token, metadata) {
-        // Send the public_token to your app server.
-        // The metadata object contains info about the institution the
-        // user selected and the account ID or IDs, if the
-        // Select Account view is enabled.
-        console.log({
-           "public_token": public_token,
-           "user_handle": $('#handle').val(),
-           "private_key": $('#key').val(),
-        });
-        // $.post('/linkAccount', {
-        //   "public_token": public_token,
-        //   "user_handle": $('#handle').val(),
-        //   "private_key": $('#key').val(),
-        // });
-        $.ajax({
-          type: 'POST',
-          url: '/linkAccount',
-          data:JSON.stringify({
-            public_token: public_token,
-            user_handle: $('#handle').val(),
-            private_key: $('#key').val(),
-          }),
-          dataType: 'json',
-          contentType: 'application/json;charset=utf-8',
-          success: function(res) {
-            console.log('success');
-          },
-          failure: function(err) {
-            console.log('error');
-          },
-        });
-        },
-        onExit: function(err, metadata) {
-        // The user exited the Link flow.
-        if (err != null) {
-          // The user encountered a Plaid API error prior to exiting.
-        }
-        // metadata contains information about the institution
-        // that the user selected and the most recent API request IDs.
-        // Storing this information can be helpful for support.
-        },
-        onEvent: function(eventName, metadata) {
-        // Optionally capture Link flow events, streamed through
-        // this callback as your users connect an Item to Plaid.
-        // For example:
-        // eventName = "TRANSITION_VIEW"
-        // metadata  = {
-        //   link_session_id: "123-abc",
-        //   mfa_type:        "questions",
-        //   timestamp:       "2017-09-14T14:42:19.350Z",
-        //   view_name:       "MFA",
-        // }
-        }
+      $(document).ready(function () {
+          console.log('page is loaded ...');
+          var handler = Plaid.create({
+              clientName: 'Plaid Quickstart',
+              env: 'sandbox',
+              key: 'fa9dd19eb40982275785b09760ab79',
+              product: ['auth'],
+              // Optional – use webhooks to get transaction and error updates
+              webhook: 'https://requestb.in',
+              onLoad: function () {
+                  // Optional, called when Link loads
+              },
+              onSuccess: function (public_token, metadata) {
+                  // Send the public_token to your app server.
+                  // The metadata object contains info about the institution the
+                  // user selected and the account ID or IDs, if the
+                  // Select Account view is enabled.
+                  console.log({
+                      "public_token": public_token,
+                      "user_handle": $('#handle').val(),
+                      "private_key": $('#key').val(),
+                  });
+                  // $.post('/linkAccount', {
+                  //   "public_token": public_token,
+                  //   "user_handle": $('#handle').val(),
+                  //   "private_key": $('#key').val(),
+                  // });
+                  $.ajax({
+                      type: 'POST',
+                      url: 'link_account',
+                      data: JSON.stringify({
+                          public_token: public_token,
+                          user_handle: $('#handle').val(),
+                          private_key: $('#key').val(),
+                      }),
+                      dataType: 'json',
+                      contentType: 'application/json;charset=utf-8',
+                      success: function (res) {
+                          console.log('success');
+                      },
+                      failure: function (err) {
+                          console.log('error');
+                      },
+                  });
+              },
+              onExit: function (err, metadata) {
+                  // The user exited the Link flow.
+                  if (err != null) {
+                      // The user encountered a Plaid API error prior to exiting.
+                  }
+                  // metadata contains information about the institution
+                  // that the user selected and the most recent API request IDs.
+                  // Storing this information can be helpful for support.
+              },
+              onEvent: function (eventName, metadata) {
+                  // Optionally capture Link flow events, streamed through
+                  // this callback as your users connect an Item to Plaid.
+                  // For example:
+                  // eventName = "TRANSITION_VIEW"
+                  // metadata  = {
+                  //   link_session_id: "123-abc",
+                  //   mfa_type:        "questions",
+                  //   timestamp:       "2017-09-14T14:42:19.350Z",
+                  //   view_name:       "MFA",
+                  // }
+              }
+          });
+          $('#link-account').on('click', function (e) {
+              handler.open();
+          });
       });
-      $('#link-account').on('click', function(e) {
-        handler.open();
-      });
-    });
   </script>
 {% endblock %}
