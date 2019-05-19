@@ -146,7 +146,7 @@ def get_accounts(request):
 
 def get_transactions(request):
     if request.method == 'POST':
-        user_obj - User_entity.objects.latest('created_date')
+        user_obj = User_entity.objects.latest('created_date')
         get_transactions_payload = {
             "user_handle": user_obj.user_handle,
             }
