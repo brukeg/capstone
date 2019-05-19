@@ -102,43 +102,52 @@
             <button type="submit" class="btn btn-block btn-primary">Register</button>
           </div>
           <hr class="left" id="line1">
-{#          <form action="{% url 'link_account' %}" class="link-account" method="POST">#}
-{#            {% csrf_token %}#}
+          <form class="link-account">
             <p><a href="#" id="link-account" class="btn btn-primary">Link Account</a></p>
           </form>
-      </form>
-    </div>
-  </div>
-
-  <div class="meta-data">
-    <div class="form-group">
-      <label for="exampleForm.ControlSelect1" class="form-label">Select User</label>
-      <button class="btn btn-sm text-danger float-right">Reset App</button>
-      <select id="exampleForm.ControlSelect1" class="form-control">
-        <option>Select a user ...</option>
-        {% for user in users %}
-          <option value="users">{{ user }}</option>
-        {% endfor %}
-      </select>
+            <form action="{% url 'get_accounts' %}" class="get-accounts" name="get-accounts" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-block btn-primary" name="get-accounts">Get Accounts</button>
+            </form>
+          </form>
+        </div>
     </div>
 
-    <div class="addresses">
-      {% if etheraddress %}
-        <address>
-          <strong>{{ handle }}</strong> {# just the first part of handle #}
-          <br>
-          <p>{{ street }}</p>
-          <p>{{ city }} {{ state }} {{ zip }}</p>
-          <br>
-          <br>
-          <p>{{ etheraddress }}</p>
-          <p class="text-muted"> Private key has been set locally</p>
-        </address>
-      {% endif %}
-    </div>
+    <div class="meta-data">
+      <div class="form-group">
+        <label for="exampleForm.ControlSelect1" class="form-label">Select User</label>
+        <button class="btn btn-sm text-danger float-right">Reset App</button>
+        <select id="exampleForm.ControlSelect1" class="form-control">
+          <option>Select a user ...</option>
+          {% for user in users %}
+            <option value="users">{{ user }}</option>
+          {% endfor %}
+        </select>
+      </div>
 
-    <strong>KYC Status:</strong>
-    <span class="kyc">
+      <div class="addresses">
+        {% if etheraddress %}
+          <address>
+            <strong>{{ handle }}</strong> {# just the first part of handle #}
+            <br>
+            <p>{{ street }}</p>
+            <p>{{ city }} {{ state }} {{ zip }}</p>
+            <br>
+            <br>
+            <p>{{ etheraddress }}</p>
+            <p class="text-muted"> Private key has been set locally</p>
+          </address>
+        {% endif %}
+      </div>
+
+      <strong>KYC Status:</strong>
+      <span class="kyc">
+      <form action="{% url 'get_transactions' %}" class="request" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-sm btn-secondary float-right"
+                name="get-transactions">Get account balance</button>
+        <br><br>
+         </form>
          <form action="{% url 'request_kyc' %}" class="request" method="POST">
            {% csrf_token %}
            <button type="submit" class="btn btn-sm btn-secondary float-right" name="request-kyc">Request KYC</button>
@@ -148,10 +157,10 @@
            <button type="submit" class="btn btn-sm btn-secondary float-right" name="check-kyc">Check KYC Status</button>
          </form>
        </span>
-    <hr id="line1">
-    <h2>Response:</h2>
-    <p class="message">{{ message }}</p>
-  </div>
+      <hr id="line1">
+      <h2>Response:</h2>
+      <p class="message">{{ message }}</p>
+    </div>
   </div>
 
   <script>
