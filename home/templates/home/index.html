@@ -18,7 +18,8 @@
             </div>
             <button type="submit" class="btn btn-block btn-primary">Check Handle</button>
           </div>
-          <hr class="left" id="line1"> {# whyyyyy #}
+          <hr class="left" id="line1">
+          {# whyyyyy #}
         </div>
       </form>
 
@@ -101,11 +102,10 @@
             <button type="submit" class="btn btn-block btn-primary">Register</button>
           </div>
           <hr class="left" id="line1">
-          {#      <form action="{% url 'link_account' %}"  class="link-account" method="POST">#}
-          {#        {% csrf_token %}#}
-          {#        <button type="submit" class="btn btn-block btn-primary" name="link-account">Link Account</button>#}
-          <p><a href="#" id="link-account" class="btn btn-primary">Link Account</a></p>
-      </form>
+{#          <form action="{% url 'link_account' %}" class="link-account" method="POST">#}
+{#            {% csrf_token %}#}
+            <p><a href="#" id="link-account" class="btn btn-primary">Link Account</a></p>
+          </form>
       </form>
     </div>
   </div>
@@ -174,8 +174,8 @@
                   // Select Account view is enabled.
                   console.log({
                       "public_token": public_token,
-                      "user_handle": $('#handle').val(),
-                      "private_key": $('#key').val(),
+                      {#"user_handle": $('#handle').val(),#}
+                      {#"private_key": $('#key').val(),#}
                   });
                   // $.post('/linkAccount', {
                   //   "public_token": public_token,
@@ -184,11 +184,10 @@
                   // });
                   $.ajax({
                       type: 'POST',
-                      url: 'link_account',
+                      url: '{% url "link_account" %}',
                       data: JSON.stringify({
+                          csrfmiddlewaretoken: '{{ csrf_token }}',
                           public_token: public_token,
-                          user_handle: $('#handle').val(),
-                          private_key: $('#key').val(),
                       }),
                       dataType: 'json',
                       contentType: 'application/json;charset=utf-8',
