@@ -113,20 +113,6 @@ def check_kyc(request):
         return render(request, 'home/index.html')
 
 
-# def link_account(request):
-#     if request.method == 'POST':
-#         user_obj = User_entity.objects.latest('created_date')
-#         link_account_payload = {
-#             "public_token": "public-development-0dc5f214-56a2-4b69-8968-f27202477d3f",
-#             "user_handle": user_obj.user_handle
-#             }
-#         response = sila_user.linkAccount(app, link_account_payload, user_obj.private_key)
-#         print(response)
-#         context = {'message': response}
-#         return render(request, 'home/index.html', context=context)
-#     else:
-#         return render(request, 'home/index.html')
-
 @csrf_exempt
 def link_account(request):
     if request.method == 'POST':
@@ -145,20 +131,77 @@ def link_account(request):
 
 
 def get_accounts(request):
-    pass
-
-
-def issue_sila(request):
-    pass
-
-
-def transfer_sila(request):
-    pass
-
-
-def redeem_sila(request):
-    pass
+    if request.method == 'POST':
+        user_obj = User_entity.objects.latest('created_date')
+        get_accounts_payload = {
+            "user_handle": user_obj.user_handle,
+            }
+        response = sila_user.getAccounts(app, get_accounts_payload, user_obj.private_key)
+        print(response)
+        context = {'message': response}
+        return render(request, 'home/index.html', context=context)
+    else:
+        return render(request, 'home/index.html')
 
 
 def get_transactions(request):
-    pass
+    if request.method == 'POST':
+        user_obj - User_entity.objects.latest('created_date')
+        get_transactions_payload = {
+            "user_handle": user_obj.user_handle,
+            }
+        response = sila_user.getTransactions(app, get_transactions_payload, user_obj.private_key)
+        print(response)
+        context = {'message': response}
+        return render(request, 'home/index.html', context=context)
+    else:
+        return render(request, 'home/index.html')
+
+def issue_sila(request):
+    if request.method == 'POST':
+        amount = request.POST['amount']
+        user_obj = User_entity.objects.latest('created_date')
+        issue_sila_payload = {
+            "amount": amount,
+            "user_handle": user_obj.user_handle,
+            }
+        response = Transaction.issueSila(app, issue_sila_payload, user_obj.private_key)
+        print(response)
+        context = {'message': response}
+        return render(request, 'home/index.html', context=context)
+    else:
+        return render(request, 'home/index.html')
+
+
+def transfer_sila(request):
+    if request.method == 'POST':
+        transfer = request.POST.getlist('transfer')
+        print(transfer)
+        user_obj = User_entity.objects.latest('created_date')
+        transfer_sila_payload ={
+            "amount": transfer[0],
+            "user_handle": user_obj.user_handle,
+            "destination": transfer[1],
+            }
+        response = Transaction.transferSila(app, transfer_sila_payload, user_obj.private_key)
+        print(response)
+        context = {'message': response}
+        return render(request, 'home/index.html', context=context)
+    else:
+        return render(request, 'home/index.html')
+
+
+def redeem_sila(request):
+    if request.method == 'POST':
+        redeem = request.POST['amount']
+        user_obj = User_entity.objects.latest('created_date')
+        redeem_sila_payload = {
+            "amount": redeem,
+            "user_handle": user_obj.user_handle,
+            }
+        response = Transaction.redeemSila(app, redeem_sila_payload, user_obj.private_key)
+        print(response)
+        context = {'message': response}
+        return render(request, 'home/index.html', context=context)
+    else:
+        return render(request, 'home/index.html')
