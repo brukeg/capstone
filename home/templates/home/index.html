@@ -105,7 +105,7 @@
           <form class="link-account">
             <p><a href="#" id="link-account" class="btn btn-primary">Link Account</a></p>
           </form>
-            <form action="{% url 'get_accounts' %}" class="get-accounts" name="get-accounts" method="POST">
+            <form action="{% url 'get_accounts' %}" class="get-accounts" method="POST">
               {% csrf_token %}
               <button type="submit" class="btn btn-block btn-primary" name="get-accounts">Get Accounts</button>
             </form>
