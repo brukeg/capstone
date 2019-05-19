@@ -1,9 +1,9 @@
 # import os, json
 from django.shortcuts import render
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
 from .models import User_entity
 import json
-# from django.http import HttpResponse
 # from home.models import User_entity, Developer
 from silasdk import App
 from silasdk import User as sila_user
@@ -127,11 +127,18 @@ def check_kyc(request):
 #     else:
 #         return render(request, 'home/index.html')
 
+@csrf_exempt
 def link_account(request):
     if request.method == 'POST':
-        data = request.data
-        data1 = json.loads(data)
-        response = json.dumps(sila_user.linkAccount(app, data1, data1["private_key"]))
+        user_obj = User_entity.objects.latest('created_date')
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        content = body['public_token']
+        link_account_payload = {
+            "public_token": content,
+            "user_handle": user_obj.user_handle,
+        }
+        response = sila_user.linkAccount(app, link_account_payload, user_obj.private_key)
         print(response)
         context = {'message': response}
         return render(request, 'home/index.html', context=context)
