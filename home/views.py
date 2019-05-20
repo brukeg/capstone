@@ -160,6 +160,7 @@ def get_transactions(request):
 def issue_sila(request):
     if request.method == 'POST':
         amount = request.POST['amount']
+        print(amount)
         user_obj = User_entity.objects.latest('created_date')
         issue_sila_payload = {
             "amount": amount,
