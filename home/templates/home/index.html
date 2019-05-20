@@ -103,45 +103,45 @@
           </div>
           <hr class="left" id="line1">
           <form class="link-account">
-            <p><a href="#" id="link-account" class="btn btn-primary">Link Account</a></p>
+            <p><a href="#" id="link-account" class="btn btn-block btn-primary">Link Account</a></p>
           </form>
-            <form action="{% url 'get_accounts' %}" class="get-accounts" method="POST">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-block btn-primary" name="get-accounts">Get Accounts</button>
-            </form>
+          <form action="{% url 'get_accounts' %}" class="get-accounts" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-block btn-primary" name="get-accounts">Get Accounts</button>
           </form>
-        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="meta-data">
+    <div class="form-group">
+      <label for="exampleForm.ControlSelect1" class="form-label">Select User</label>
+      <button class="btn btn-sm text-danger float-right">Reset App</button>
+      <select id="exampleForm.ControlSelect1" class="form-control">
+        <option>Select a user ...</option>
+        {% for user in users %}
+          <option value="users">{{ user }}</option>
+        {% endfor %}
+      </select>
     </div>
 
-    <div class="meta-data">
-      <div class="form-group">
-        <label for="exampleForm.ControlSelect1" class="form-label">Select User</label>
-        <button class="btn btn-sm text-danger float-right">Reset App</button>
-        <select id="exampleForm.ControlSelect1" class="form-control">
-          <option>Select a user ...</option>
-          {% for user in users %}
-            <option value="users">{{ user }}</option>
-          {% endfor %}
-        </select>
-      </div>
+    <div class="addresses">
+      {% if etheraddress %}
+        <address>
+          <strong>{{ handle }}</strong> {# just the first part of handle #}
+          <br>
+          <p>{{ street }}</p>
+          <p>{{ city }} {{ state }} {{ zip }}</p>
+          <br>
+          <br>
+          <p>{{ etheraddress }}</p>
+          <p class="text-muted"> Private key has been set locally</p>
+        </address>
+      {% endif %}
+    </div>
 
-      <div class="addresses">
-        {% if etheraddress %}
-          <address>
-            <strong>{{ handle }}</strong> {# just the first part of handle #}
-            <br>
-            <p>{{ street }}</p>
-            <p>{{ city }} {{ state }} {{ zip }}</p>
-            <br>
-            <br>
-            <p>{{ etheraddress }}</p>
-            <p class="text-muted"> Private key has been set locally</p>
-          </address>
-        {% endif %}
-      </div>
-
-      <strong>KYC Status:</strong>
-      <span class="kyc">
+    <strong>KYC Status:</strong>
+    <span class="kyc">
       <form action="{% url 'get_transactions' %}" class="request" method="POST">
         {% csrf_token %}
         <button type="submit" class="btn btn-sm btn-secondary float-right"
@@ -157,10 +157,49 @@
            <button type="submit" class="btn btn-sm btn-secondary float-right" name="check-kyc">Check KYC Status</button>
          </form>
        </span>
-      <hr id="line1">
-      <h2>Response:</h2>
-      <p class="message">{{ message }}</p>
+    <hr id="line1">
+    <h2>Response:</h2>
+    <p class="message">{{ message }}</p>
+    <div class="amount-destination" id="amount-destination">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <input type="text" class="form-control" id="input-amount" name="amount" placeholder="Amount">
+          <small id="amountHelp" class="form-text text-muted">1 Sila = $0.01.</small>
+        </div>
+        <div class="form-group col-md-6">
+          <div class="mb-3 input-group">
+            <input type="text" class="form-control" name="handle" placeholder="User Handle" aria-label="User Handle"
+                   aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2">.silamoney.eth</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="submit-row issue-transfer-redeem" id="issue-transfer-redeem">
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <form action="{% url 'issue_sila' %}" class="issue" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-block btn-primary" name="issue">Issue Sila</button>
+            </form>
+          </div>
+          <div class="form-group col-md-4">
+            <form action="{% url 'transfer_sila' %}" class="transfer" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-block btn-primary" name="issue">Transfer Sila</button>
+            </form>
+          </div>
+          <div class="form-group col-md-4">
+            <form action="{% url 'redeem_sila' %}" class="redeem" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-block btn-primary" name="issue">Redeem Sila</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
   </div>
 
   <script>
