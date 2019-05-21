@@ -159,8 +159,9 @@ def get_transactions(request):
 
 def issue_sila(request):
     if request.method == 'POST':
-        amount = request.POST['amount']
+        amount = float(request.POST['issue-amount'])
         print(amount)
+        print(type(amount))
         user_obj = User_entity.objects.latest('created_date')
         issue_sila_payload = {
             "amount": amount,
@@ -180,9 +181,9 @@ def transfer_sila(request):
         print(transfer)
         user_obj = User_entity.objects.latest('created_date')
         transfer_sila_payload ={
-            "amount": transfer[0],
+            "amount": float(transfer[0]),
             "user_handle": user_obj.user_handle,
-            "destination": transfer[1],
+            "destination": transfer[1] + '.silamoney.eth',
             }
         response = Transaction.transferSila(app, transfer_sila_payload, user_obj.private_key)
         print(response)
@@ -194,7 +195,7 @@ def transfer_sila(request):
 
 def redeem_sila(request):
     if request.method == 'POST':
-        redeem = request.POST['amount']
+        redeem = float(request.POST['redeem-amount'])
         user_obj = User_entity.objects.latest('created_date')
         redeem_sila_payload = {
             "amount": redeem,
