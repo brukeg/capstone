@@ -160,118 +160,122 @@
     <hr id="line1">
     <h2>Response:</h2>
     <p class="message">{{ message }}</p>
-    <div class="amount-destination" id="amount-destination">
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <input type="text" class="form-control" id="input-amount" name="amount" placeholder="Amount">
+
+    <form class="col form-inputs" id="issue-sila-inputs" action="{% url 'issue_sila' %}" method="POST">
+      {% csrf_token %}
+      <div class="issue-sila" id="issue-sila">
+        <div class="form-group col-md-12">
+          <input type="number" class="form-control" id="input-amount" name="issue-amount" placeholder="Amount">
           <small id="amountHelp" class="form-text text-muted">1 Sila = $0.01.</small>
         </div>
-        <div class="form-group col-md-6">
+        <button type="submit" class="btn btn-block btn-primary">Issue Sila</button>
+      </div>
+      <hr class="left" id="line1">
+    </form>
+
+    <form class="col form-inputs" id="transfer-sila-inputs" action="{% url 'transfer_sila' %}" method="POST">
+      {% csrf_token %}
+      <div class="transfer-sila" id="transfer-sila">
+        <div class="form-group col-md-12">
+          <input type="number" class="form-control" id="transfer-amount" name="transfer" placeholder="Amount">
+          <small id="amountHelp" class="form-text text-muted">1 Sila = $0.01.</small>
+        </div>
+        <div class="form-group col-md-12">
           <div class="mb-3 input-group">
-            <input type="text" class="form-control" name="handle" placeholder="User Handle" aria-label="User Handle"
+            <input type="text" class="form-control" name="transfer" placeholder="User Handle" aria-label="User Handle"
                    aria-describedby="basic-addon2">
             <div class="input-group-append">
               <span class="input-group-text" id="basic-addon2">.silamoney.eth</span>
             </div>
           </div>
         </div>
+        <button type="submit" class="btn btn-block btn-primary">Transfer Sila</button>
       </div>
-      <div class="submit-row issue-transfer-redeem" id="issue-transfer-redeem">
-        <div class="form-row">
-          <div class="form-group col-md-4">
-            <form action="{% url 'issue_sila' %}" class="issue" method="POST">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-block btn-primary" name="issue">Issue Sila</button>
-            </form>
-          </div>
-          <div class="form-group col-md-4">
-            <form action="{% url 'transfer_sila' %}" class="transfer" method="POST">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-block btn-primary" name="issue">Transfer Sila</button>
-            </form>
-          </div>
-          <div class="form-group col-md-4">
-            <form action="{% url 'redeem_sila' %}" class="redeem" method="POST">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-block btn-primary" name="issue">Redeem Sila</button>
-            </form>
-          </div>
+      <hr class="left" id="line1">
+    </form>
+
+    <form class="col form-inputs" id="redeem-sila-inputs" action="{% url 'redeem_sila' %}" method="POST">
+      {% csrf_token %}
+      <div class="redeem-sila" id="redeem-sila">
+        <div class="form-group col-md-12">
+          <input type="number" class="form-control" id="redeem-amount" name="redeem-amount" placeholder="Amount">
+          <small id="amountHelp" class="form-text text-muted">1 Sila = $0.01.</small>
         </div>
+        <button type="submit" class="btn btn-block btn-primary">Redeem Sila</button>
       </div>
-    </div>
+      <hr class="left" id="line1">
+    </form>
   </div>
   </div>
 
-  <script>
-      $(document).ready(function () {
-          console.log('page is loaded ...');
-          var handler = Plaid.create({
-              clientName: 'Plaid Quickstart',
-              env: 'sandbox',
-              key: 'fa9dd19eb40982275785b09760ab79',
-              product: ['auth'],
-              // Optional – use webhooks to get transaction and error updates
-              webhook: 'https://requestb.in',
-              onLoad: function () {
-                  // Optional, called when Link loads
-              },
-              onSuccess: function (public_token, metadata) {
-                  // Send the public_token to your app server.
-                  // The metadata object contains info about the institution the
-                  // user selected and the account ID or IDs, if the
-                  // Select Account view is enabled.
-                  console.log({
-                      "public_token": public_token,
-                      {#"user_handle": $('#handle').val(),#}
-                      {#"private_key": $('#key').val(),#}
-                  });
-                  // $.post('/linkAccount', {
-                  //   "public_token": public_token,
-                  //   "user_handle": $('#handle').val(),
-                  //   "private_key": $('#key').val(),
-                  // });
-                  $.ajax({
-                      type: 'POST',
-                      url: '{% url "link_account" %}',
-                      data: JSON.stringify({
-                          csrfmiddlewaretoken: '{{ csrf_token }}',
-                          public_token: public_token,
-                      }),
-                      dataType: 'json',
-                      contentType: 'application/json;charset=utf-8',
-                      success: function (res) {
-                          console.log('success');
-                      },
-                      failure: function (err) {
-                          console.log('error');
-                      },
-                  });
-              },
-              onExit: function (err, metadata) {
-                  // The user exited the Link flow.
-                  if (err != null) {
-                      // The user encountered a Plaid API error prior to exiting.
-                  }
-                  // metadata contains information about the institution
-                  // that the user selected and the most recent API request IDs.
-                  // Storing this information can be helpful for support.
-              },
-              onEvent: function (eventName, metadata) {
-                  // Optionally capture Link flow events, streamed through
-                  // this callback as your users connect an Item to Plaid.
-                  // For example:
-                  // eventName = "TRANSITION_VIEW"
-                  // metadata  = {
-                  //   link_session_id: "123-abc",
-                  //   mfa_type:        "questions",
-                  //   timestamp:       "2017-09-14T14:42:19.350Z",
-                  //   view_name:       "MFA",
-                  // }
-              }
-          });
-          $('#link-account').on('click', function (e) {
-              handler.open();
-          });
-      });
-  </script>
+    <script>
+        $(document).ready(function () {
+            console.log('page is loaded ...');
+            var handler = Plaid.create({
+                clientName: 'Plaid Quickstart',
+                env: 'sandbox',
+                key: 'fa9dd19eb40982275785b09760ab79',
+                product: ['auth'],
+                // Optional – use webhooks to get transaction and error updates
+                webhook: 'https://requestb.in',
+                onLoad: function () {
+                    // Optional, called when Link loads
+                },
+                onSuccess: function (public_token, metadata) {
+                    // Send the public_token to your app server.
+                    // The metadata object contains info about the institution the
+                    // user selected and the account ID or IDs, if the
+                    // Select Account view is enabled.
+                    console.log({
+                        "public_token": public_token,
+                    });
+                    // $.post('/linkAccount', {
+                    //   "public_token": public_token,
+                    //   "user_handle": $('#handle').val(),
+                    //   "private_key": $('#key').val(),
+                    // });
+                    $.ajax({
+                        type: 'POST',
+                        url: '{% url "link_account" %}',
+                        data: JSON.stringify({
+                            csrfmiddlewaretoken: '{{ csrf_token }}',
+                            public_token: public_token,
+                        }),
+                        dataType: 'json',
+                        contentType: 'application/json;charset=utf-8',
+                        success: function (res) {
+                            console.log('success');
+                        },
+                        failure: function (err) {
+                            console.log('error');
+                        },
+                    });
+                },
+                onExit: function (err, metadata) {
+                    // The user exited the Link flow.
+                    if (err != null) {
+                        // The user encountered a Plaid API error prior to exiting.
+                    }
+                    // metadata contains information about the institution
+                    // that the user selected and the most recent API request IDs.
+                    // Storing this information can be helpful for support.
+                },
+                onEvent: function (eventName, metadata) {
+                    // Optionally capture Link flow events, streamed through
+                    // this callback as your users connect an Item to Plaid.
+                    // For example:
+                    // eventName = "TRANSITION_VIEW"
+                    // metadata  = {
+                    //   link_session_id: "123-abc",
+                    //   mfa_type:        "questions",
+                    //   timestamp:       "2017-09-14T14:42:19.350Z",
+                    //   view_name:       "MFA",
+                    // }
+                }
+            });
+            $('#link-account').on('click', function (e) {
+                handler.open();
+            });
+        });
+    </script>
 {% endblock %}
