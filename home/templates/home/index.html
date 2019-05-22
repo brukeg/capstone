@@ -18,7 +18,7 @@
             </div>
             <button type="submit" class="btn btn-block btn-primary">Check Handle</button>
           </div>
-          <hr class="left" id="line1">
+          <hr id="line1">
           {# whyyyyy #}
         </div>
       </form>
@@ -101,10 +101,29 @@
 
             <button type="submit" class="btn btn-block btn-primary">Register</button>
           </div>
-          <hr class="left" id="line1">
-          <form class="link-account">
-            <p><a href="#" id="link-account" class="btn btn-block btn-primary">Link Account</a></p>
-          </form>
+          <hr id="line1">
+          <div>
+            <form class="link-account">
+              <button class="btn btn-sm text-success float-right">Refresh Accounts</button>
+              <button type="submit" class="btn btn-block btn-primary" id="link-account">Link Account</button>
+              {#              <p><a href="#" id="link-account" class="btn btn-block btn-primary">Link Account</a></p>#}
+            </form>
+            <table class="table table-sm table-striped table-bordered table-hover">
+              <thead>
+              <tr>
+                <th>Acct #</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Status</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td colspan="4">Refresh accounts to view</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
           <form action="{% url 'get_accounts' %}" class="get-accounts" method="POST">
             {% csrf_token %}
             <button type="submit" class="btn btn-block btn-primary" name="get-accounts">Get Accounts</button>
@@ -114,34 +133,39 @@
   </div>
 
   <div class="meta-data">
-    <div class="form-group">
-      <label for="exampleForm.ControlSelect1" class="form-label">Select User</label>
-      <button class="btn btn-sm text-danger float-right">Reset App</button>
-      <select id="exampleForm.ControlSelect1" class="form-control">
-        <option>Select a user ...</option>
-        {% for user in users %}
-          <option value="users">{{ user }}</option>
-        {% endfor %}
-      </select>
-    </div>
+    <form class="col form-inputs" id="drop-down">
+      <div class="select-users" id="select-users">
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="exampleForm.ControlSelect1" class="form-label">Select User</label>
+            <button class="btn btn-sm text-danger float-right">Reset App</button>
+            <select id="exampleForm.ControlSelect1" class="form-control">
+              <option>Select a user ...</option>
+              {% for user in users %}
+                <option value="users">{{ user }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+      </div>
+    </form>
 
     <div class="addresses">
       {% if etheraddress %}
         <address>
-          <strong>{{ handle }}</strong> {# just the first part of handle #}
-          <br>
+          <strong>{{ full_name }}</strong>
           <p>{{ street }}</p>
           <p>{{ city }} {{ state }} {{ zip }}</p>
           <br>
-          <br>
+          {#            <br>#}
           <p>{{ etheraddress }}</p>
           <p class="text-muted"> Private key has been set locally</p>
         </address>
       {% endif %}
     </div>
 
-    <strong>KYC Status:</strong>
-    <span class="kyc">
+    <div class="kyc-status">
+      <span class="kyc">
       <form action="{% url 'get_transactions' %}" class="request" method="POST">
         {% csrf_token %}
         <button type="submit" class="btn btn-sm btn-secondary float-right"
@@ -156,126 +180,143 @@
            {% csrf_token %}
            <button type="submit" class="btn btn-sm btn-secondary float-right" name="check-kyc">Check KYC Status</button>
          </form>
+        <strong>KYC Status:</strong>
        </span>
-    <hr id="line1">
-    <h2>Response:</h2>
-    <p class="message">{{ message }}</p>
+      <hr id="line1">
+    </div>
 
-    <form class="col form-inputs" id="issue-sila-inputs" action="{% url 'issue_sila' %}" method="POST">
-      {% csrf_token %}
-      <div class="issue-sila" id="issue-sila">
-        <div class="form-group col-md-12">
-          <input type="number" class="form-control" id="input-amount" name="issue-amount" placeholder="Amount">
-          <small id="amountHelp" class="form-text text-muted">1 Sila = $0.01.</small>
-        </div>
-        <button type="submit" class="btn btn-block btn-primary">Issue Sila</button>
-      </div>
-      <hr class="left" id="line1">
-    </form>
+    <div class="response-messages">
+      <h2>Response:</h2>
+      <p class="message">{{ message }}</p>
+    </div>
 
-    <form class="col form-inputs" id="transfer-sila-inputs" action="{% url 'transfer_sila' %}" method="POST">
-      {% csrf_token %}
-      <div class="transfer-sila" id="transfer-sila">
-        <div class="form-group col-md-12">
-          <input type="number" class="form-control" id="transfer-amount" name="transfer" placeholder="Amount">
-          <small id="amountHelp" class="form-text text-muted">1 Sila = $0.01.</small>
-        </div>
-        <div class="form-group col-md-12">
-          <div class="mb-3 input-group">
-            <input type="text" class="form-control" name="transfer" placeholder="User Handle" aria-label="User Handle"
-                   aria-describedby="basic-addon2">
-            <div class="input-group-append">
-              <span class="input-group-text" id="basic-addon2">.silamoney.eth</span>
+    <div class="sila">
+      <form class="col form-inputs" id="issue-sila-inputs" action="{% url 'issue_sila' %}" method="POST">
+        {% csrf_token %}
+        <div class="issue-sila" id="issue-sila">
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <h6>Issue Sila:</h6>
+              <input type="number" class="form-control" id="input-amount" name="issue-amount" placeholder="Amount">
+              <small id="amountHelp" class="form-text text-muted">1 Sila = $0.01</small>
+              <button type="submit" class="btn btn-block btn-primary">Issue Sila</button>
             </div>
           </div>
         </div>
-        <button type="submit" class="btn btn-block btn-primary">Transfer Sila</button>
-      </div>
-      <hr class="left" id="line1">
-    </form>
+        <hr id="line1">
+      </form>
 
-    <form class="col form-inputs" id="redeem-sila-inputs" action="{% url 'redeem_sila' %}" method="POST">
-      {% csrf_token %}
-      <div class="redeem-sila" id="redeem-sila">
-        <div class="form-group col-md-12">
-          <input type="number" class="form-control" id="redeem-amount" name="redeem-amount" placeholder="Amount">
-          <small id="amountHelp" class="form-text text-muted">1 Sila = $0.01.</small>
+      <form class="col form-inputs" id="transfer-sila-inputs" action="{% url 'transfer_sila' %}" method="POST">
+        {% csrf_token %}
+        <div class="transfer-sila" id="transfer-sila">
+          <h6>Transfer Sila:</h6>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <input type="number" class="form-control" id="transfer-amount" name="transfer" placeholder="Amount">
+              <small id="amountHelp" class="form-text text-muted">1 Sila = $0.01</small>
+            </div>
+            <div class="form-group col-md-6">
+              <div class="mb-3 input-group">
+                <input type="text" class="form-control" name="transfer" placeholder="User Handle"
+                       aria-label="User Handle"
+                       aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">.silamoney.eth</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <button type="submit" class="btn btn-block btn-primary">Transfer Sila</button>
         </div>
-        <button type="submit" class="btn btn-block btn-primary">Redeem Sila</button>
-      </div>
-      <hr class="left" id="line1">
-    </form>
+        <hr id="line1">
+      </form>
+
+      <form class="col form-inputs" id="redeem-sila-inputs" action="{% url 'redeem_sila' %}" method="POST">
+        {% csrf_token %}
+        <div class="redeem-sila" id="redeem-sila">
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <h6>Redeem Sila:</h6>
+              <input type="number" class="form-control" id="redeem-amount" name="redeem-amount" placeholder="Amount">
+              <small id="amountHelp" class="form-text text-muted">1 Sila = $0.01</small>
+              <button type="submit" class="btn btn-block btn-primary">Redeem Sila</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
   </div>
 
-    <script>
-        $(document).ready(function () {
-            console.log('page is loaded ...');
-            var handler = Plaid.create({
-                clientName: 'Plaid Quickstart',
-                env: 'sandbox',
-                key: 'fa9dd19eb40982275785b09760ab79',
-                product: ['auth'],
-                // Optional – use webhooks to get transaction and error updates
-                webhook: 'https://requestb.in',
-                onLoad: function () {
-                    // Optional, called when Link loads
-                },
-                onSuccess: function (public_token, metadata) {
-                    // Send the public_token to your app server.
-                    // The metadata object contains info about the institution the
-                    // user selected and the account ID or IDs, if the
-                    // Select Account view is enabled.
-                    console.log({
-                        "public_token": public_token,
-                    });
-                    // $.post('/linkAccount', {
-                    //   "public_token": public_token,
-                    //   "user_handle": $('#handle').val(),
-                    //   "private_key": $('#key').val(),
-                    // });
-                    $.ajax({
-                        type: 'POST',
-                        url: '{% url "link_account" %}',
-                        data: JSON.stringify({
-                            csrfmiddlewaretoken: '{{ csrf_token }}',
-                            public_token: public_token,
-                        }),
-                        dataType: 'json',
-                        contentType: 'application/json;charset=utf-8',
-                        success: function (res) {
-                            console.log('success');
-                        },
-                        failure: function (err) {
-                            console.log('error');
-                        },
-                    });
-                },
-                onExit: function (err, metadata) {
-                    // The user exited the Link flow.
-                    if (err != null) {
-                        // The user encountered a Plaid API error prior to exiting.
-                    }
-                    // metadata contains information about the institution
-                    // that the user selected and the most recent API request IDs.
-                    // Storing this information can be helpful for support.
-                },
-                onEvent: function (eventName, metadata) {
-                    // Optionally capture Link flow events, streamed through
-                    // this callback as your users connect an Item to Plaid.
-                    // For example:
-                    // eventName = "TRANSITION_VIEW"
-                    // metadata  = {
-                    //   link_session_id: "123-abc",
-                    //   mfa_type:        "questions",
-                    //   timestamp:       "2017-09-14T14:42:19.350Z",
-                    //   view_name:       "MFA",
-                    // }
-                }
-            });
-            $('#link-account').on('click', function (e) {
-                handler.open();
-            });
-        });
-    </script>
+  <script>
+      $(document).ready(function () {
+          console.log('page is loaded ...');
+          var handler = Plaid.create({
+              clientName: 'Plaid Quickstart',
+              env: 'sandbox',
+              key: 'fa9dd19eb40982275785b09760ab79',
+              product: ['auth'],
+              // Optional – use webhooks to get transaction and error updates
+              webhook: 'https://requestb.in',
+              onLoad: function () {
+                  // Optional, called when Link loads
+              },
+              onSuccess: function (public_token, metadata) {
+                  // Send the public_token to your app server.
+                  // The metadata object contains info about the institution the
+                  // user selected and the account ID or IDs, if the
+                  // Select Account view is enabled.
+                  console.log({
+                      "public_token": public_token,
+                  });
+                  // $.post('/linkAccount', {
+                  //   "public_token": public_token,
+                  //   "user_handle": $('#handle').val(),
+                  //   "private_key": $('#key').val(),
+                  // });
+                  $.ajax({
+                      type: 'POST',
+                      url: '{% url "link_account" %}',
+                      data: JSON.stringify({
+                          csrfmiddlewaretoken: '{{ csrf_token }}',
+                          public_token: public_token,
+                      }),
+                      dataType: 'json',
+                      contentType: 'application/json;charset=utf-8',
+                      success: function (res) {
+                          console.log('success');
+                      },
+                      failure: function (err) {
+                          console.log('error');
+                      },
+                  });
+              },
+              onExit: function (err, metadata) {
+                  // The user exited the Link flow.
+                  if (err != null) {
+                      // The user encountered a Plaid API error prior to exiting.
+                  }
+                  // metadata contains information about the institution
+                  // that the user selected and the most recent API request IDs.
+                  // Storing this information can be helpful for support.
+              },
+              onEvent: function (eventName, metadata) {
+                  // Optionally capture Link flow events, streamed through
+                  // this callback as your users connect an Item to Plaid.
+                  // For example:
+                  // eventName = "TRANSITION_VIEW"
+                  // metadata  = {
+                  //   link_session_id: "123-abc",
+                  //   mfa_type:        "questions",
+                  //   timestamp:       "2017-09-14T14:42:19.350Z",
+                  //   view_name:       "MFA",
+                  // }
+              }
+          });
+          $('#link-account').on('click', function (e) {
+              handler.open();
+          });
+      });
+  </script>
 {% endblock %}
