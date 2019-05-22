@@ -1,46 +1,108 @@
-body {
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+/*body {*/
+/*margin: 0;*/
+/*padding: 0;*/
+/*font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",*/
+/*"Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",*/
+/*sans-serif;*/
+/*-webkit-font-smoothing: antialiased;*/
+/*-moz-osx-font-smoothing: grayscale;*/
+/*}*/
+
+/*code {*/
+/*font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",*/
+/*monospace;*/
+/*}*/
+
+*, *:before, *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+body {
+    margin: 0;
 }
+
 h1 {
     text-align: center;
 }
 
+#settings-button {
+    margin-right: 3em;
+}
+
 .app {
-    display: grid;
-    grid-gap: 7px;
-    grid-template-columns: repeat(2, [col] 1fr);
-    align-items: center;
+    position: relative;
+    margin: .5em;
 }
 
 .left {
-    grid-column: col / span;
+    /*border: 1px solid #ccc;*/
+    padding: 1.25em;
+    margin-bottom: .5em;
 }
 
 .meta-data {
-    grid-column: col / span;
+    /*border: 1px solid #ccc;*/
+    padding: 1.25em;
 }
 
-/*#drop-down {*/
-    /*grid-column: 1 / 3;*/
-    /*grid-row: 1;*/
-/*}*/
+@media screen and (min-width: 47.5em ) {
+    .left {
+        margin-right: 50%;
+    }
+
+    .meta-data {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 50%;
+    }
+}
+
+#drop-down {
+    position: static;
+}
+
+.addresses {
+    position: static;
+    padding-left: 15px;
+    padding-right: 15px;
+    min-height: 150px;
+}
+
+.kyc-status {
+    position: static;
+    padding-left: 15px;
+    padding-right: 15px;
+}
 
 .float-right {
-    float: right!important;
+    float: right !important;
     margin: 2px;
 }
 
-#line1{
-	border-top: 1px solid #ccc;
+.response-messages {
+    padding-left: 15px;
+    padding-right: 15px;
+    min-height: 150px;
+}
+
+.sila {
+    position: static;
+}
+#issue-sila {
+    margin-top: 18em;
+}
+
+#transfer-sila {
+
+}
+
+#redeem-sila {
+
+}
+
+#line1 {
+    border-top: 1px solid #ccc;
 }
