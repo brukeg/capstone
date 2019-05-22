@@ -83,6 +83,8 @@ def register(request):
             'zip': payload['postal_code'],
             'etheraddress': payload['crypto_address'],
             'handle': payload['user_handle'],
+            'full_name': payload['entity_name'],
+
         }
         return render(request, 'home/index.html', context=context)
     else:
