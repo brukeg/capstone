@@ -123,16 +123,12 @@
                 </thead>
                 <tbody>
                 <tr>
-                  {% if not response %}
-                    {% for dict in response %}
-                      {% for key in dict %}
-                        <td> key['account_number']</td>"hello"
-                        <td> key['account_type']</td>
-                        <td> key['account_name']</td>
-                        <td> key['account_status]</td>
-                      {% endfor %}
-                    {% endfor %}
-                  {% elif response %}
+                  {% if response %}
+                    <td> {{ response.account_number }}</td>
+                    <td> {{ response.account_name }}</td>
+                    <td> {{ response.account_type }}</td>
+                    <td> {{ response.account_status }}</td>
+                  {% else %}
                     <td colspan="4">Refresh accounts to view</td>
                   {% endif %}
                 </tr>
