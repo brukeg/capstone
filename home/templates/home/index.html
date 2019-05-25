@@ -109,6 +109,7 @@
               </button>
             </form>
             <form class="link-account">
+              <input type="text" class="user-handle-input hidden-element" name="hidden-user-handle">
               <button type="button" class="btn btn-block btn-primary" id="link-account">Link Account</button>
             </form>
             <div class="table-responsive">
@@ -150,11 +151,12 @@
         <div class="form-row">
           <div class="form-group col-md-12">
             <label for="exampleForm.ControlSelect1" class="form-label">Select User</label>
+            {# TODO: hook up later #}
             <button class="btn btn-sm text-danger float-right">Reset App</button>
-            <select id="exampleForm.ControlSelect1" class="form-control">
+            <select id="drop-down-selector" class="form-control">
               <option>Select a user ...</option>
               {% for user in users %}
-                <option value="users">{{ user }}</option>
+                <option value="{{ user }}">{{ user }}</option>
               {% endfor %}
             </select>
           </div>
@@ -201,6 +203,7 @@
     </div>
 
     <div class="sila">
+      {# TODO: pass in the current user in the drop down below user=user or some such  #}
       <form class="col form-inputs" id="issue-sila-inputs" action="{% url 'issue_sila' %}" method="POST">
         {% csrf_token %}
         <div class="issue-sila" id="issue-sila">
@@ -209,6 +212,7 @@
               <h6>Issue Sila:</h6>
               <input type="number" class="form-control" id="input-amount" name="issue-amount" placeholder="Amount">
               <small id="amountHelp" class="form-text text-muted">1 Sila = $0.01</small>
+              <input type="text" class="user-handle-input hidden-element" name="hidden-user-handle">
               <button type="submit" class="btn btn-block btn-primary">Issue Sila</button>
             </div>
           </div>
@@ -260,7 +264,14 @@
   </div>
 
   <script>
+
       $(document).ready(function () {
+          $('#drop-down-selector').change(function () {
+              var user_handle = $('#drop-down-selector option:selected').val();
+              $('.user-handle-input').val(user_handle);
+              console.log(user_handle);
+          });
+
           console.log('page is loaded ...');
           var handler = Plaid.create({
               clientName: 'Plaid Quickstart',

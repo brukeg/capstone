@@ -1,5 +1,5 @@
 # import os, json
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from .models import User_entity
@@ -146,7 +146,7 @@ def get_accounts(request):
         user_obj1 = User_entity.objects.latest('created_date')
         get_accounts_payload = {
             "user_handle": user_obj1.user_handle,
-            }
+        }
         response = sila_user.getAccounts(app, get_accounts_payload, user_obj1.private_key)
         response = response[0]
         return render(request, 'home/index.html', {'response': response, 'users': user_obj})
@@ -161,28 +161,31 @@ def get_transactions(request):
         user_obj1 = User_entity.objects.latest('created_date')
         get_transactions_payload = {
             "user_handle": user_obj1.user_handle,
-            }
+        }
         response = sila_user.getTransactions(app, get_transactions_payload, user_obj1.private_key)
         context['message'] = response
         return render(request, 'home/index.html', context=context)
     else:
         return render(request, 'home/index.html')
 
+
 def issue_sila(request):
+    user_obj = User_entity.objects.all()
+    context = {'users': user_obj}
     if request.method == 'POST':
-        user_obj = User_entity.objects.all()
-        context = {'users': user_obj}
         amount = float(request.POST['issue-amount'])
-        user_obj1 = User_entity.objects.latest('created_date')
+        user = request.POST['hidden-user-handle']
+        user_entity = get_object_or_404(user_obj, user_handle=user)
         issue_sila_payload = {
             "amount": amount,
-            "user_handle": user_obj1.user_handle,
-            }
-        response = Transaction.issueSila(app, issue_sila_payload, user_obj1.private_key)
+            "user_handle": user_entity.user_handle,
+        }
+        response = Transaction.issueSila(app, issue_sila_payload, user_entity.private_key)
         context['message'] = response
+        # TODO: clean this up
         return render(request, 'home/index.html', context=context)
     else:
-        return render(request, 'home/index.html')
+        return render(request, 'home/index.html', context=context)
 
 
 def transfer_sila(request):
@@ -192,11 +195,11 @@ def transfer_sila(request):
         transfer = request.POST.getlist('transfer')
         print(transfer)
         user_obj1 = User_entity.objects.latest('created_date')
-        transfer_sila_payload ={
+        transfer_sila_payload = {
             "amount": float(transfer[0]),
             "user_handle": user_obj1.user_handle,
             "destination": transfer[1] + '.silamoney.eth',
-            }
+        }
         response = Transaction.transferSila(app, transfer_sila_payload, user_obj1.private_key)
         context['message'] = response
         return render(request, 'home/index.html', context=context)
@@ -213,7 +216,7 @@ def redeem_sila(request):
         redeem_sila_payload = {
             "amount": redeem,
             "user_handle": user_obj1.user_handle,
-            }
+        }
         response = Transaction.redeemSila(app, redeem_sila_payload, user_obj1.private_key)
         context['message'] = response
         return render(request, 'home/index.html', context=context)
