@@ -60,6 +60,10 @@ h1 {
     }
 }
 
+.hidden-element {
+    display: none;
+}
+
 #drop-down {
     position: static;
 }
@@ -96,6 +100,7 @@ h1 {
 .sila {
     position: static;
 }
+
 #issue-sila {
     margin-top: 18em;
 }
