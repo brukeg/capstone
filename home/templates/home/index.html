@@ -103,11 +103,14 @@
           </div>
           <hr id="line1">
           <div>
+              <form action="{% url 'get_accounts' %}" class="get-accounts" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm text-success float-right" name="get-accounts">Refresh Accounts</button>
+              </form>
             <form class="link-account">
-              <button class="btn btn-sm text-success float-right">Refresh Accounts</button>
-              <button type="submit" class="btn btn-block btn-primary" id="link-account">Link Account</button>
-              {#              <p><a href="#" id="link-account" class="btn btn-block btn-primary">Link Account</a></p>#}
+              <button type="button" class="btn btn-block btn-primary" id="link-account">Link Account</button>
             </form>
+            <div class="table-responsive">
             <table class="table table-sm table-striped table-bordered table-hover">
               <thead>
               <tr>
@@ -119,10 +122,22 @@
               </thead>
               <tbody>
               <tr>
-                <td colspan="4">Refresh accounts to view</td>
+                {% if not response %}
+                  {% for dict in response %}
+                    {% for key in dict %}
+                      <td> key['account_number']</td>"hello"
+                      <td> key['account_type']</td>
+                      <td> key['account_name']</td>
+                      <td> key['account_status]</td>
+                    {% endfor %}
+                  {% endfor %}
+                {% elif response %}
+                  <td colspan="4">Refresh accounts to view</td>
+                {% endif %}
               </tr>
               </tbody>
             </table>
+            </div>
           </div>
           <form action="{% url 'get_accounts' %}" class="get-accounts" method="POST">
             {% csrf_token %}
@@ -154,10 +169,8 @@
       {% if etheraddress %}
         <address>
           <strong>{{ full_name }}</strong>
-          <p>{{ street }}</p>
-          <p>{{ city }} {{ state }} {{ zip }}</p>
-          <br>
-          {#            <br>#}
+          <p>{{ street }}<br>
+          {{ city }} {{ state }} {{ zip }}</p>
           <p>{{ etheraddress }}</p>
           <p class="text-muted"> Private key has been set locally</p>
         </address>
@@ -176,7 +189,7 @@
            {% csrf_token %}
            <button type="submit" class="btn btn-sm btn-secondary float-right" name="request-kyc">Request KYC</button>
          </form>
-         <form action="{% url 'request_kyc' %}" class="check" method="POST">
+         <form action="{% url 'check_kyc' %}" class="check" method="POST">
            {% csrf_token %}
            <button type="submit" class="btn btn-sm btn-secondary float-right" name="check-kyc">Check KYC Status</button>
          </form>
@@ -187,7 +200,7 @@
 
     <div class="response-messages">
       <h2>Response:</h2>
-      <p class="message">{{ message }}</p>
+      <pre class="message">{{ message }}</pre>
     </div>
 
     <div class="sila">
