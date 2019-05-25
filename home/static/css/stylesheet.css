@@ -82,6 +82,11 @@ h1 {
     margin: 2px;
 }
 
+.message {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
 .response-messages {
     padding-left: 15px;
     padding-right: 15px;
