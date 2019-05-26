@@ -94,79 +94,90 @@ def register(request):
 
 
 def request_kyc(request):
+    user_obj = User_entity.objects.all()
+    context = {'users': user_obj}
     if request.method == 'POST':
-        user_obj = User_entity.objects.all()
-        context = {'users': user_obj}
-        user_obj1 = User_entity.objects.latest('created_date')  # oh boy
-        request_kyc_payload = {"user_handle": user_obj1.user_handle}
-        response = sila_user.requestKyc(app, request_kyc_payload, user_obj1.private_key)
+        user = request.POST['hidden-user-handle']
+        user_entity = get_object_or_404(user_obj, user_handle=user)
+        request_kyc_payload = {
+            "user_handle": user_entity.user_handle
+        }
+        response = sila_user.requestKyc(app, request_kyc_payload, user_entity.private_key)
         context['message'] = response
         return render(request, 'home/index.html', context=context)
     else:
-        return render(request, 'home/index.html')
+        return render(request, 'home/index.html', context=context)
 
 
 def check_kyc(request):
+    user_obj = User_entity.objects.all()
+    context = {'users': user_obj}
     if request.method == 'POST':
-        user_obj = User_entity.objects.all()
-        context = {'users': user_obj}
-        user_obj1 = User_entity.objects.latest('created_date')
-        check_kyc_payload = {"user_handle": user_obj1.user_handle}
-        response = sila_user.checkKyc(app, check_kyc_payload, user_obj1.private_key)
+        user = request.POST['hidden-user-handle']
+        user_entity = get_object_or_404(user_obj, user_handle=user)
+        check_kyc_payload = {
+            "user_handle": user_entity.user_handle
+        }
+        response = sila_user.checkKyc(app, check_kyc_payload, user_entity.private_key)
         context['message'] = response
         return render(request, 'home/index.html', context=context)
     else:
-        return render(request, 'home/index.html')
+        return render(request, 'home/index.html', context=context)
 
 
 @csrf_exempt
 def link_account(request):
+    user_obj = User_entity.objects.all()
+    context = {'users': user_obj}
     if request.method == 'POST':
-        user_obj = User_entity.objects.all()
-        context = {'users': user_obj}
-        user_obj1 = User_entity.objects.latest('created_date')
+        user = request.POST['hidden-user-handle']
+        user_entity = get_object_or_404(user_obj, user_handle=user)
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
         content = body['public_token']
         link_account_payload = {
             "public_token": content,
-            "user_handle": user_obj1.user_handle,
+            "user_handle": user_entity.user_handle,
         }
-        response = sila_user.linkAccount(app, link_account_payload, user_obj1.private_key)
+        response = sila_user.linkAccount(app, link_account_payload, user_entity.private_key)
         print(response)
-        #  context is still not printing to the screen...
+        #  TODO: context is still not printing to the screen...
         context['message'] = response
+        return render(request, 'home/index.html', context=context)
+    else:
         return render(request, 'home/index.html', context=context)
 
 
 def get_accounts(request):
-    # get rid of bootstrap button, and link "refresh accounts"
+    # TODO: get rid of bootstrap button, and link "refresh accounts"
+    user_obj = User_entity.objects.all()
     if request.method == 'POST':
-        user_obj = User_entity.objects.all()
-        user_obj1 = User_entity.objects.latest('created_date')
+        user = request.POST['hidden-user-handle']
+        user_entity = get_object_or_404(user_obj, user_handle=user)
         get_accounts_payload = {
-            "user_handle": user_obj1.user_handle,
+            "user_handle": user_entity.user_handle,
         }
-        response = sila_user.getAccounts(app, get_accounts_payload, user_obj1.private_key)
+        response = sila_user.getAccounts(app, get_accounts_payload, user_entity.private_key)
         response = response[0]
         return render(request, 'home/index.html', {'response': response, 'users': user_obj})
     else:
-        return render(request, 'home/index.html')
+        return render(request, 'home/index.html', {'response': response, 'users': user_obj})
 
 
 def get_transactions(request):
+    user_obj = User_entity.objects.all()
+    context = {'users': user_obj}
     if request.method == 'POST':
-        user_obj = User_entity.objects.all()
-        context = {'users': user_obj}
-        user_obj1 = User_entity.objects.latest('created_date')
+        user = request.POST['hidden-user-handle']
+        user_entity = get_object_or_404(user_obj, user_handle=user)
         get_transactions_payload = {
-            "user_handle": user_obj1.user_handle,
+            "user_handle": user_entity.user_handle,
         }
-        response = sila_user.getTransactions(app, get_transactions_payload, user_obj1.private_key)
+        response = sila_user.getTransactions(app, get_transactions_payload, user_entity.private_key)
         context['message'] = response
         return render(request, 'home/index.html', context=context)
     else:
-        return render(request, 'home/index.html')
+        return render(request, 'home/index.html', context=context)
 
 
 def issue_sila(request):
@@ -182,43 +193,43 @@ def issue_sila(request):
         }
         response = Transaction.issueSila(app, issue_sila_payload, user_entity.private_key)
         context['message'] = response
-        # TODO: clean this up
         return render(request, 'home/index.html', context=context)
     else:
         return render(request, 'home/index.html', context=context)
 
 
 def transfer_sila(request):
+    user_obj = User_entity.objects.all()
+    context = {'users': user_obj}
     if request.method == 'POST':
-        user_obj = User_entity.objects.all()
-        context = {'users': user_obj}
         transfer = request.POST.getlist('transfer')
-        print(transfer)
-        user_obj1 = User_entity.objects.latest('created_date')
+        user = request.POST['hidden-user-handle']
+        user_entity = get_object_or_404(user_obj, user_handle=user)
         transfer_sila_payload = {
             "amount": float(transfer[0]),
-            "user_handle": user_obj1.user_handle,
+            "user_handle": user_entity.user_handle,
             "destination": transfer[1] + '.silamoney.eth',
         }
-        response = Transaction.transferSila(app, transfer_sila_payload, user_obj1.private_key)
+        response = Transaction.transferSila(app, transfer_sila_payload, user_entity.private_key)
         context['message'] = response
         return render(request, 'home/index.html', context=context)
     else:
-        return render(request, 'home/index.html')
+        return render(request, 'home/index.html', context=context)
 
 
 def redeem_sila(request):
+    user_obj = User_entity.objects.all()
+    context = {'users': user_obj}
     if request.method == 'POST':
-        user_obj = User_entity.objects.all()
-        context = {'users': user_obj}
         redeem = float(request.POST['redeem-amount'])
-        user_obj1 = User_entity.objects.latest('created_date')
+        user = request.POST['hidden-user-handle']
+        user_entity = get_object_or_404(user_obj, user_handle=user)
         redeem_sila_payload = {
             "amount": redeem,
-            "user_handle": user_obj1.user_handle,
+            "user_handle": user_entity.user_handle,
         }
-        response = Transaction.redeemSila(app, redeem_sila_payload, user_obj1.private_key)
+        response = Transaction.redeemSila(app, redeem_sila_payload, user_entity.private_key)
         context['message'] = response
         return render(request, 'home/index.html', context=context)
     else:
-        return render(request, 'home/index.html')
+        return render(request, 'home/index.html', context=context)
