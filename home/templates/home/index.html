@@ -5,145 +5,273 @@
   <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
   <div class="app">
     <div class="left">
-      <form class="col form-inputs" id="check-handle-inputs" action="{% url 'check_handle' %}" method="POST">
-        {% csrf_token %}
-        <div class="check-handle" id="check-handle">
-          <div class="input-group col-md-12">
-            <div class="mb-3 input-group">
-              <input type="text" class="form-control" name="handle" placeholder="User Handle" aria-label="User Handle"
-                     aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <span class="input-group-text" id="basic-addon2">.silamoney.eth</span>
-              </div>
-            </div>
-            <button type="submit" class="btn btn-block btn-primary">Check Handle</button>
-          </div>
-          <hr id="line1">
-          {# whyyyyy #}
-        </div>
-      </form>
-
-
-      <form class="col form-inputs" id="register-inputs" action="{% url 'register' %}" method="POST">
-        {% csrf_token %}
-        <div class="col register" id="register">
-          <div class="name" id="name">
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <input type="text" class="form-control" id="first-name" name="register" placeholder="First Name">
-              </div>
-              <div class="form-group col-md-6">
-                <input type="text" class="form-control" id="last-name" name="register" placeholder="Last Name">
-              </div>
-            </div>
+      <div id="accordion">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                      aria-controls="collapseOne">
+                <i class="fas fa-user-check"></i> Check Handle
+              </button>
+            </h5>
           </div>
 
-          <div class="handle" id="handle">
-            <div class="form-row">
-              <div class="input-group col-md-12">
-                <div class="mb-3 input-group">
-                  <input type="text" class="form-control" name="register" placeholder="User Handle"
-                         aria-label="User Handle" aria-describedby="basic-addon2">
-                  <div class="input-group-append">
-                    <span class="input-group-text" id="basic-addon2">.silamoney.eth</span>
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+              <form class="col form-inputs" id="check-handle-inputs" action="{% url 'check_handle' %}" method="POST">
+                {% csrf_token %}
+                <div class="check-handle" id="check-handle">
+                  <div class="input-group col-md-12">
+                    <div class="mb-3 input-group">
+                      <input type="text" class="form-control" name="handle" placeholder="User Handle"
+                             aria-label="User Handle"
+                             aria-describedby="basic-addon2">
+                      <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon2">.silamoney.eth</span>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-block btn-primary">Check Handle</button>
                   </div>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
+        </div>
 
-          <div class="address" id="address">
-            <div class="form-row">
-              <div class="form-group col-md-12">
-                <input type="text" class="form-control" id="input-address" name="register" placeholder="1234 Main St">
-              </div>
-            </div>
-          </div>
-
-          <div class="city-state-zip" id="city-state-zip">
-            <div class="form-row">
-              <div class="form-group col-md-4">
-                <input type="text" class="form-control" id="input-city" name="register" placeholder="City">
-              </div>
-
-              <div class="form-group col-md-4">
-                <input type="text" class="form-control" id="input-state" name="register" placeholder="State">
-              </div>
-
-              <div class="form-group col-md-4">
-                <input type="text" class="form-control" id="input-zip" name="register" placeholder="Zip Code">
-              </div>
-            </div>
-          </div>
-
-          <div class="ssn-dob" id="ssn-dob">
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <input type="text" class="form-control" id="input-ssn" name="register" placeholder="SSN">
-              </div>
-
-              <div class="form-group col-md-6">
-                <input type="text" class="form-control" id="input-dob" name="register" placeholder="yyyy-mm-dd">
-              </div>
-            </div>
-
-            <div class="email-phone" id="email-phone">
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <input type="email" class="form-control" id="input-email" name="register" placeholder="Email">
-                </div>
-
-                <div class="form-group col-md-6">
-                  <input type="text" class="form-control" id="input-phone" name="register" placeholder="Phone">
-                </div>
-              </div>
-            </div>
-
-            <button type="submit" class="btn btn-block btn-primary">Register</button>
-          </div>
-          <hr id="line1">
-          <div>
-            <form action="{% url 'get_accounts' %}" class="get-accounts" method="POST">
-              {% csrf_token %}
-              <input type="text" class="user-handle-input hidden-element" name="hidden-user-handle">
-              <button type="submit" class="btn btn-sm text-success float-right" name="get-accounts">Refresh Accounts
+        <div class="card">
+          <div class="card-header" id="headingTwo">
+            <h4 class="mb-0">
+              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                      aria-expanded="false" aria-controls="collapseTwo">
+                <i class="fas fa-id-card"></i> Register
               </button>
-            </form>
-            <form class="link-account">
-              <input type="text" class="user-handle-input hidden-element" name="hidden-user-handle">
-              <button type="button" class="btn btn-block btn-primary" id="link-account">Link Account</button>
-            </form>
-            <div class="table-responsive">
-              <table class="table table-sm table-striped table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th>Acct #</th>
-                  <th>Name</th>
-                  <th>Type</th>
-                  <th>Status</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  {% if response %}
-                    <td> {{ response.account_number }}</td>
-                    <td> {{ response.account_name }}</td>
-                    <td> {{ response.account_type }}</td>
-                    <td> {{ response.account_status }}</td>
-                  {% else %}
-                    <td colspan="4">Refresh accounts to view</td>
-                  {% endif %}
-                </tr>
-                </tbody>
-              </table>
+            </h4>
+          </div>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+              <form class="col form-inputs" id="register-inputs" action="{% url 'register' %}" method="POST">
+                {% csrf_token %}
+                <div class="col register" id="register">
+                  <div class="name" id="name">
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <input type="text" class="form-control" id="first-name" name="register"
+                               placeholder="First Name">
+                      </div>
+                      <div class="form-group col-md-6">
+                        <input type="text" class="form-control" id="last-name" name="register" placeholder="Last Name">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="handle" id="handle">
+                    <div class="form-row">
+                      <div class="input-group col-md-12">
+                        <div class="mb-3 input-group">
+                          <input type="text" class="form-control" name="register" placeholder="User Handle"
+                                 aria-label="User Handle" aria-describedby="basic-addon2">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2">.silamoney.eth</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="address" id="address">
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <input type="text" class="form-control" id="input-address" name="register"
+                               placeholder="1234 Main St">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="city-state-zip" id="city-state-zip">
+                    <div class="form-row">
+                      <div class="form-group col-md-4">
+                        <input type="text" class="form-control" id="input-city" name="register" placeholder="City">
+                      </div>
+
+                      <div class="form-group col-md-4">
+                        <input type="text" class="form-control" id="input-state" name="register" placeholder="State">
+                      </div>
+
+                      <div class="form-group col-md-4">
+                        <input type="text" class="form-control" id="input-zip" name="register" placeholder="Zip Code">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="ssn-dob" id="ssn-dob">
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <input type="text" class="form-control" id="input-ssn" name="register" placeholder="SSN">
+                      </div>
+
+                      <div class="form-group col-md-6">
+                        <input type="text" class="form-control" id="input-dob" name="register" placeholder="yyyy-mm-dd">
+                      </div>
+                    </div>
+
+                    <div class="email-phone" id="email-phone">
+                      <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <input type="email" class="form-control" id="input-email" name="register" placeholder="Email">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                          <input type="text" class="form-control" id="input-phone" name="register" placeholder="Phone">
+                        </div>
+                      </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-block btn-primary">Register</button>
+                  </div>
+                  <hr id="line1">
+              </form>
             </div>
           </div>
-          <form action="{% url 'get_accounts' %}" class="get-accounts" method="POST">
-            {% csrf_token %}
-            <input type="text" class="user-handle-input hidden-element" name="hidden-user-handle">
-            <button type="submit" class="btn btn-block btn-primary" name="get-accounts">Get Accounts</button>
-          </form>
-      </form>
+        </div>
+
+        <div class="card">
+          <div class="card-header" id="headingThree">
+            <h4 class="mb-0">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseThree"  {# collapsed false show#}
+                      aria-expanded="true" aria-controls="collapseThree">
+                <i class="fas fa-credit-card"></i> Accounts
+              </button>
+            </h4>
+          </div>
+          <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+              <form class="col form-inputs" id="get-account-inputs"> {# something must be up here... #}
+                <div>
+                  <form action="{% url 'get_accounts' %}" class="get-accounts" method="POST">
+                    {% csrf_token %}
+                    <input type="text" class="user-handle-input hidden-element" name="hidden-user-handle">
+                    <button type="submit" class="btn btn-sm text-success float-right" name="get-accounts">Refresh
+                      Accounts
+                    </button>
+                  </form>
+                  <form class="link-account">
+                    <input type="text" class="user-handle-input hidden-element" name="hidden-user-handle">
+                    <button type="button" class="btn btn-block btn-primary" id="link-account">Link Account</button>
+                  </form>
+                  <div class="table-responsive">
+                    <table class="table table-sm table-striped table-bordered table-hover">
+                      <thead>
+                      <tr>
+                        <th>Acct #</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        {% if response %}
+                          <td> {{ response.account_number }}</td>
+                          <td> {{ response.account_name }}</td>
+                          <td> {{ response.account_type }}</td>
+                          <td> {{ response.account_status }}</td>
+                        {% else %}
+                          <td colspan="4">Refresh accounts to view</td>
+                        {% endif %}
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <form action="{% url 'get_accounts' %}" class="get-accounts" method="POST">
+                  {% csrf_token %}
+                  <input type="text" class="user-handle-input hidden-element" name="hidden-user-handle">
+                  <button type="submit" class="btn btn-block btn-primary" name="get-accounts">Get Accounts</button>
+                </form>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingFour">
+            <h5 class="mb-0">
+              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour"
+                      aria-expanded="false"
+                      aria-controls="collapseFour">
+                <i class="fas fa-handshake"></i> Transactions
+              </button>
+            </h5>
+          </div>
+          <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+            <div class="card-body">
+              <div class="sila">
+                {# TODO: pass in the current user in the drop down below user=user or some such  #}
+                <form class="col form-inputs" id="issue-sila-inputs" action="{% url 'issue_sila' %}" method="POST">
+                  {% csrf_token %}
+                  <div class="issue-sila" id="issue-sila">
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <h6>Issue Sila:</h6>
+                        <input type="number" class="form-control" id="input-amount" name="issue-amount"
+                               placeholder="Amount">
+                        <small id="amountHelp" class="form-text text-muted">1 Sila = $0.01</small>
+                        <input type="text" class="user-handle-input hidden-element" name="hidden-user-handle">
+                        <button type="submit" class="btn btn-block btn-primary">Issue Sila</button>
+                      </div>
+                    </div>
+                  </div>
+                  <hr id="line1">
+                </form>
+
+                <form class="col form-inputs" id="transfer-sila-inputs" action="{% url 'transfer_sila' %}"
+                      method="POST">
+                  {% csrf_token %}
+                  <div class="transfer-sila" id="transfer-sila">
+                    <h6>Transfer Sila:</h6>
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <input type="number" class="form-control" id="transfer-amount" name="transfer"
+                               placeholder="Amount">
+                        <small id="amountHelp" class="form-text text-muted">1 Sila = $0.01</small>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <div class="mb-3 input-group">
+                          <input type="text" class="form-control" name="transfer" placeholder="User Handle"
+                                 aria-label="User Handle"
+                                 aria-describedby="basic-addon2">
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2">.silamoney.eth</span>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <input type="text" class="user-handle-input hidden-element" name="hidden-user-handle">
+                    <button type="submit" class="btn btn-block btn-primary">Transfer Sila</button>
+                  </div>
+                  <hr id="line1">
+                </form>
+
+                <form class="col form-inputs" id="redeem-sila-inputs" action="{% url 'redeem_sila' %}" method="POST">
+                  {% csrf_token %}
+                  <div class="redeem-sila" id="redeem-sila">
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <h6>Redeem Sila:</h6>
+                        <input type="number" class="form-control" id="redeem-amount" name="redeem-amount"
+                               placeholder="Amount">
+                        <small id="amountHelp" class="form-text text-muted">1 Sila = $0.01</small>
+                        <input type="text" class="user-handle-input hidden-element" name="hidden-user-handle">
+                        <button type="submit" class="btn btn-block btn-primary">Redeem Sila</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -172,8 +300,8 @@
           <strong>{{ full_name }}</strong>
           <p>{{ street }}<br>
             {{ city }} {{ state }} {{ zip }}</p>
-          <p>{{ etheraddress }}</p>
-          <p class="text-muted"> Private key has been set locally</p>
+          <p><i class="fas fa-globe"></i> {{ etheraddress }}</p>
+          <p class="text-muted"><i class="fas fa-key"></i> Private key has been set locally</p>
         </address>
       {% endif %}
     </div>
@@ -204,67 +332,6 @@
     <div class="response-messages">
       <h2>Response:</h2>
       <pre class="message">{{ message }}</pre>
-    </div>
-
-    <div class="sila">
-      {# TODO: pass in the current user in the drop down below user=user or some such  #}
-      <form class="col form-inputs" id="issue-sila-inputs" action="{% url 'issue_sila' %}" method="POST">
-        {% csrf_token %}
-        <div class="issue-sila" id="issue-sila">
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <h6>Issue Sila:</h6>
-              <input type="number" class="form-control" id="input-amount" name="issue-amount" placeholder="Amount">
-              <small id="amountHelp" class="form-text text-muted">1 Sila = $0.01</small>
-              <input type="text" class="user-handle-input hidden-element" name="hidden-user-handle">
-              <button type="submit" class="btn btn-block btn-primary">Issue Sila</button>
-            </div>
-          </div>
-        </div>
-        <hr id="line1">
-      </form>
-
-      <form class="col form-inputs" id="transfer-sila-inputs" action="{% url 'transfer_sila' %}" method="POST">
-        {% csrf_token %}
-        <div class="transfer-sila" id="transfer-sila">
-          <h6>Transfer Sila:</h6>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <input type="number" class="form-control" id="transfer-amount" name="transfer" placeholder="Amount">
-              <small id="amountHelp" class="form-text text-muted">1 Sila = $0.01</small>
-            </div>
-            <div class="form-group col-md-6">
-              <div class="mb-3 input-group">
-                <input type="text" class="form-control" name="transfer" placeholder="User Handle"
-                       aria-label="User Handle"
-                       aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                  <span class="input-group-text" id="basic-addon2">.silamoney.eth</span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-          <input type="text" class="user-handle-input hidden-element" name="hidden-user-handle">
-          <button type="submit" class="btn btn-block btn-primary">Transfer Sila</button>
-        </div>
-        <hr id="line1">
-      </form>
-
-      <form class="col form-inputs" id="redeem-sila-inputs" action="{% url 'redeem_sila' %}" method="POST">
-        {% csrf_token %}
-        <div class="redeem-sila" id="redeem-sila">
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <h6>Redeem Sila:</h6>
-              <input type="number" class="form-control" id="redeem-amount" name="redeem-amount" placeholder="Amount">
-              <small id="amountHelp" class="form-text text-muted">1 Sila = $0.01</small>
-              <input type="text" class="user-handle-input hidden-element" name="hidden-user-handle">
-              <button type="submit" class="btn btn-block btn-primary">Redeem Sila</button>
-            </div>
-          </div>
-        </div>
-      </form>
     </div>
   </div>
   </div>
