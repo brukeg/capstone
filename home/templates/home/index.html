@@ -338,10 +338,11 @@
 {% block js %}
   <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
   <script>
+      let user_handle // global user variable
 
       $(document).ready(function () {
           $('#drop-down-selector').change(function () {
-              var user_handle = $('#drop-down-selector option:selected').val();
+            user_handle = $('#drop-down-selector option:selected').val();
               $('.user-handle-input').val(user_handle);
               console.log(user_handle);
           });
@@ -373,6 +374,9 @@
                   $.ajax({
                       type: 'POST',
                       url: '{% url "link_account" %}',
+                      headers: {
+                        'signer': user_handle,
+                      },
                       data: JSON.stringify({
                           csrfmiddlewaretoken: '{{ csrf_token }}',
                           public_token: public_token,
