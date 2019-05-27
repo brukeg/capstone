@@ -7,7 +7,7 @@
         <div class="card">
           <div class="card-header" id="headingOne">
             <h5 class="mb-0">
-              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
                       aria-controls="collapseOne">
                 <i class="fas fa-user-check"></i> Check Handle
               </button>
@@ -44,7 +44,7 @@
               </button>
             </h4>
           </div>
-          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+          <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
             <div class="card-body">
               <form class="col form-inputs" id="register-inputs" action="{% url 'register' %}" method="POST">
                 {% csrf_token %}
@@ -134,22 +134,14 @@
         <div class="card">
           <div class="card-header" id="headingThree">
             <h4 class="mb-0">
-              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseThree"
-                      {# collapsed false show#}
-                      aria-expanded="true" aria-controls="collapseThree">
+              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
+                      aria-expanded="false" aria-controls="collapseThree">
                 <i class="fas fa-credit-card"></i> Accounts
               </button>
             </h4>
           </div>
           <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordion">
             <div class="card-body">
-              <form class="col form-inputs" action="{% url 'get_accounts' %}" class="get-accounts" method="POST">
-                {% csrf_token %}
-                <input type="text" class="user-handle-input hidden-element" name="hidden-user-handle">
-                <button type="submit" class="btn btn-sm text-success float-right" name="get-accounts">Refresh
-                  Accounts
-                </button>
-              </form>
               <form class="col form-inputs link-account">
                 <input type="text" class="user-handle-input hidden-element" name="hidden-user-handle">
                 <button type="button" class="btn btn-block btn-primary" id="link-account">Link Account</button>
@@ -177,6 +169,14 @@
                   </tr>
                   </tbody>
                 </table>
+                <form class="col form-inputs refresh" action="{% url 'get_accounts' %}" class="get-accounts"
+                      method="POST">
+                  {% csrf_token %}
+                  <input type="text" class="user-handle-input hidden-element" name="hidden-user-handle">
+                  <button type="submit" class="btn btn-sm text-success float-left" name="get-accounts">Refresh
+                    Accounts
+                  </button>
+                </form>
               </div>
             </div>
           </div>
@@ -191,7 +191,7 @@
               </button>
             </h5>
           </div>
-          <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+          <div id="collapseFour" class="collapse show" aria-labelledby="headingFour" data-parent="#accordion">
             <div class="card-body">
               <div class="sila">
                 <form class="col form-inputs" id="issue-sila-inputs" action="{% url 'issue_sila' %}" method="POST">
