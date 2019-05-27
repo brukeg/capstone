@@ -130,11 +130,11 @@ def link_account(request):
     user_obj = User_entity.objects.all()
     context = {'users': user_obj}
     if request.method == 'POST':
-        user = request.POST['hidden-user-handle']
-        print(user)
-        user_entity = get_object_or_404(user_obj, user_handle=user)
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
+        user = body['hidden-user-handle']
+        print(user)
+        user_entity = get_object_or_404(user_obj, user_handle=user)
         content = body['public_token']
         print(content)
         link_account_payload = {
