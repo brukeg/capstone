@@ -159,7 +159,7 @@ def get_accounts(request):
         response = response[0]
         return render(request, 'home/index.html', {'response': response, 'users': user_obj})
     else:
-        return render(request, 'home/index.html', {'response': response, 'users': user_obj})
+        return render(request, 'home/index.html', {'users': user_obj})
 
 
 def get_transactions(request):
