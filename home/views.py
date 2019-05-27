@@ -133,16 +133,13 @@ def link_account(request):
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
         user = body['hidden-user-handle']
-        print(user)
         user_entity = get_object_or_404(user_obj, user_handle=user)
         content = body['public_token']
-        print(content)
         link_account_payload = {
             "public_token": content,
             "user_handle": user_entity.user_handle,
         }
         response = sila_user.linkAccount(app, link_account_payload, user_entity.private_key)
-        print(response)
         #  TODO: context is still not printing to the screen...
         context['message'] = response
         return render(request, 'home/index.html', context=context)
@@ -151,7 +148,6 @@ def link_account(request):
 
 
 def get_accounts(request):
-    # TODO: get rid of bootstrap button, and link "refresh accounts"
     user_obj = User_entity.objects.all()
     if request.method == 'POST':
         user = request.POST['hidden-user-handle']

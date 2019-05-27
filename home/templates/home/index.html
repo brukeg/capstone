@@ -13,7 +13,6 @@
               </button>
             </h5>
           </div>
-
           <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
             <div class="card-body">
               <form class="col form-inputs" id="check-handle-inputs" action="{% url 'check_handle' %}" method="POST">
@@ -135,7 +134,8 @@
         <div class="card">
           <div class="card-header" id="headingThree">
             <h4 class="mb-0">
-              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseThree"  {# collapsed false show#}
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseThree"
+                      {# collapsed false show#}
                       aria-expanded="true" aria-controls="collapseThree">
                 <i class="fas fa-credit-card"></i> Accounts
               </button>
@@ -143,50 +143,41 @@
           </div>
           <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordion">
             <div class="card-body">
-              <form class="col form-inputs" id="get-account-inputs"> {# something must be up here... #}
-                <div>
-                  <form action="{% url 'get_accounts' %}" class="get-accounts" method="POST">
-                    {% csrf_token %}
-                    <input type="text" class="user-handle-input hidden-element" name="hidden-user-handle">
-                    <button type="submit" class="btn btn-sm text-success float-right" name="get-accounts">Refresh
-                      Accounts
-                    </button>
-                  </form>
-                  <form class="link-account">
-                    <input type="text" class="user-handle-input hidden-element" name="hidden-user-handle">
-                    <button type="button" class="btn btn-block btn-primary" id="link-account">Link Account</button>
-                  </form>
-                  <div class="table-responsive">
-                    <table class="table table-sm table-striped table-bordered table-hover">
-                      <thead>
-                      <tr>
-                        <th>Acct #</th>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Status</th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                      <tr>
-                        {% if response %}
-                          <td> {{ response.account_number }}</td>
-                          <td> {{ response.account_name }}</td>
-                          <td> {{ response.account_type }}</td>
-                          <td> {{ response.account_status }}</td>
-                        {% else %}
-                          <td colspan="4">Refresh accounts to view</td>
-                        {% endif %}
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <form action="{% url 'get_accounts' %}" class="get-accounts" method="POST">
-                  {% csrf_token %}
-                  <input type="text" class="user-handle-input hidden-element" name="hidden-user-handle">
-                  <button type="submit" class="btn btn-block btn-primary" name="get-accounts">Get Accounts</button>
-                </form>
+              <form class="col form-inputs" action="{% url 'get_accounts' %}" class="get-accounts" method="POST">
+                {% csrf_token %}
+                <input type="text" class="user-handle-input hidden-element" name="hidden-user-handle">
+                <button type="submit" class="btn btn-sm text-success float-right" name="get-accounts">Refresh
+                  Accounts
+                </button>
               </form>
+              <form class="col form-inputs link-account">
+                <input type="text" class="user-handle-input hidden-element" name="hidden-user-handle">
+                <button type="button" class="btn btn-block btn-primary" id="link-account">Link Account</button>
+              </form>
+              <div class="col form-inputs table-responsive">
+                <table class="table table-sm table-striped table-bordered table-hover">
+                  <thead>
+                  <tr>
+                    <th>Acct #</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    {% if response %}
+                      <td> {{ response.account_number }}</td>
+                      <td> {{ response.account_name }}</td>
+                      <td> {{ response.account_type }}</td>
+                      <td> {{ response.account_status }}</td>
+                    {% else %}
+                      <td colspan="4">Refresh accounts to view</td>
+                    {% endif %}
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -203,7 +194,6 @@
           <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
             <div class="card-body">
               <div class="sila">
-                {# TODO: pass in the current user in the drop down below user=user or some such  #}
                 <form class="col form-inputs" id="issue-sila-inputs" action="{% url 'issue_sila' %}" method="POST">
                   {% csrf_token %}
                   <div class="issue-sila" id="issue-sila">
@@ -322,7 +312,7 @@
            <input type="text" class="user-handle-input hidden-element" name="hidden-user-handle">
            <button type="submit" class="btn btn-sm btn-secondary float-right" name="check-kyc">Check KYC Status</button>
          </form>
-        <strong>KYC Status:</strong>
+        <strong>KYC Status: {{ status }}</strong>
        </span>
       <hr id="line1">
     </div>
@@ -334,7 +324,7 @@
   </div>
   </div>
 {% endblock %}
-  
+
 {% block js %}
   <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
   <script>
@@ -342,7 +332,7 @@
 
       $(document).ready(function () {
           $('#drop-down-selector').change(function () {
-            user_handle = $('#drop-down-selector option:selected').val();
+              user_handle = $('#drop-down-selector option:selected').val();
               $('.user-handle-input').val(user_handle);
               console.log(user_handle);
           });
@@ -375,7 +365,7 @@
                       type: 'POST',
                       url: '{% url "link_account" %}',
                       headers: {
-                        'signer': user_handle,
+                          'signer': user_handle,
                       },
                       data: JSON.stringify({
                           csrfmiddlewaretoken: '{{ csrf_token }}',
