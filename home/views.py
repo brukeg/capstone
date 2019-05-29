@@ -40,6 +40,7 @@ def register(request):
         user_obj = User_entity.objects.all()
         context = {'users': user_obj}
         register_fields = request.POST.getlist('register')
+        # TODO: declare silamoney.eth as a constant.
         handle = register_fields[2] + '.silamoney.eth'
         wallet = EthWallet.create("saoiufsidyfoisueyfjwhgerhwebrwbebrwemnbrauxkhamewskhx")
         payload = {
@@ -78,6 +79,7 @@ def register(request):
         )
         user.save()
 
+        # TODO: Clone response into context for maximal code reuse (molly).
         context['reference'] = response['reference']
         context['message'] = response['message']
         context['status'] = response['status']
