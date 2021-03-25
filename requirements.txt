@@ -16,7 +16,7 @@ pyaml==19.4.1
 pycryptodome==3.8.1
 pysha3==1.0.2
 pytz==2019.1
-PyYAML==5.1
+PyYAML==5.4
 requests==2.21.0
 rlp==1.1.0
 silasdk==0.2
